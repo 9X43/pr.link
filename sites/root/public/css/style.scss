@@ -1,0 +1,153 @@
+// Font
+@import url("https://fonts.googleapis.com/css?family=Space+Mono:400,700");
+
+// Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: default;
+}
+
+a {
+  cursor: pointer;
+}
+
+html, body {
+  width: 100%;
+}
+
+// Variables
+$base_fontsize:     17px;
+$header_fontsize:   1.953rem;
+$header_lineheight: 2.441rem;
+$text_fontsize:     1rem;
+$text_lineheight:   1.563rem;
+
+$cta:               hsl(54, 100%, 56%);
+$base:              hsl(0, 0%, 1%);
+$dark:              hsl(0, 0%, 50%);
+$darkish:           hsl(0, 0%, 25%);
+$darker:            hsl(0, 0%, 10%);
+$bright:            hsl(0, 0%, 90%);
+
+// Styles
+:root {
+  font-size: $base_fontsize;
+}
+
+html {
+  font-size: $base_fontsize;
+  background: linear-gradient(90deg, $darker 1px, $base 1px), $base;
+  background-size: 25em 25em;
+  background-position: top center;
+}
+
+body {
+  font-family: "Space Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0 auto;
+  max-width: 25rem;
+  position: relative;
+}
+
+aside {
+  position: absolute;
+  left: -21rem;
+  top: 3rem;
+  z-index: -43;
+  width: 22rem;
+
+  & img {
+    width: 100%;
+    opacity: .45;
+    border-radius: .1rem;
+  }
+}
+
+h1 {
+  color: $bright;
+  font-size: $header_fontsize;
+  line-height: $header_lineheight;
+  padding: 6rem 0 5rem 0;
+}
+
+article {
+  font-size: $text_fontsize;
+  line-height: $text_lineheight;
+  color: $dark;
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 4rem;
+  }
+
+  header {
+    font-weight: bold;
+    position: relative;
+    text-transform: uppercase;
+    color: $bright;
+    display: inline-block;
+    letter-spacing: 1.5px;
+
+    .languages_used {
+      margin-left: 1rem;
+      background: $darker;
+      color: $dark;
+      border-radius: 0.2rem;
+      font-size: 0.65rem;
+      padding: 0.1rem 0.4rem 0.03rem 0.4rem;
+      top: -0.1rem;
+      position: relative;
+      letter-spacing: 0;
+    }
+  }
+
+  p {
+    padding-left: 2rem;
+  }
+
+  .links {
+    padding-left: 2rem;
+    padding-top: 1rem;
+    list-style-type: none;
+    color: $base;
+
+    a {
+      color: $cta;
+      background-image: linear-gradient(0deg, $cta, $cta);
+      background-size: 1px 1px;
+      background-repeat: repeat-x;
+      background-position: bottom;
+      text-decoration: none;
+      transition: all 250ms ease;
+
+      &:hover {
+        color: $base;
+        background-size: 1px 100%; 
+      }
+    }
+  }
+}
+
+footer {
+  color: $darkish;
+  padding: 5rem 0 2rem 0;
+  font-size: 0.8rem;
+}
+
+@media(max-width: 25rem) {
+  main {
+    padding-bottom: 0;
+  }
+
+  aside {
+    left: -18rem;
+  }
+
+  article {
+    margin: 2rem;
+    margin-bottom: 0;
+  }
+}

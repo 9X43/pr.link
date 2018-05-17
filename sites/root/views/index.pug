@@ -1,0 +1,21 @@
+doctype html
+head
+  meta(charset = "utf-8")
+  title pr.link
+  meta(name = "viewport" content = "width=device-width, initial-scale=1.0, user-scalable=no")
+  link(rel = "stylesheet" href = "css/style.css")
+body
+  aside
+    img(src = "/img/note_to_self.jpg")
+  main
+    h1 this header intentionally left blank
+    each article in articles
+      article
+        header= article.title
+          span(class = "languages_used")= article.languages
+        p= article.description
+        ol(class = "links")
+          each link, index in article.links
+            li
+              a(href = link.href)= link.title
+  footer v.01.000 — Neat, I actually completed something.

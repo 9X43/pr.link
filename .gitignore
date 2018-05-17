@@ -1,0 +1,12 @@
+# Node
+node_modules
+
+# npm
+*.log
+
+# macOs
+*.DS_Store
+
+# compiled files
+*.css
+*.html
