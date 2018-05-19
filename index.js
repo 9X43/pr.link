@@ -7,11 +7,6 @@ const    path = require("path");
 const      fs = require("fs");
 const     app = express();
 
-// Middleware
-if (process.env.NODE_ENV === "production") {
-  app.use(enforce.HTTPS({trustProtoHeader: true}));
-}
-
 // Paths
 const root = __dirname;
 
@@ -60,13 +55,29 @@ if (fs.existsSync(sites)) {
     });
 }
 
+// Enforce Https
+app.use(enforce.HTTPS({trustProtoHeader: true}));
+
 // Route
 app.get("*", (req, res, next) => {
   res.status(404).send();
 });
 
-// Settings
-app.set("port", process.env.PORT || 5000);
-
 // Listen
-app.listen(app.get("port"));
+const ports = {
+  http: process.env.PORT || 8000,
+  https: process.env.PORT || 8443
+}
+
+if (process.env.NODE_ENV === "production") {
+  app.listen(ports.http);
+} else {
+  const  http = require("http");
+  const https = require("https");
+
+  http.createServer(app).listen(ports.http);
+  https.createServer({
+    key: fs.readFileSync(path.join(root, "certificates/localhost.key")),
+    cert: fs.readFileSync(path.join(root, "certificates/localhost.crt"))
+  }, app).listen(ports.https);
+}

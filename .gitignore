@@ -1,5 +1,6 @@
 # Node
 node_modules
+certificates
 
 # npm
 *.log
@@ -10,3 +11,6 @@ node_modules
 # compiled files
 *.css
 *.html
+
+# sublime text
+*.sublime-workspace
