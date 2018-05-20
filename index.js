@@ -10,6 +10,9 @@ const     app = express();
 // Paths
 const root = __dirname;
 
+// Enforce Https
+app.use(enforce.HTTPS({trustProtoHeader: true}));
+
 // Add Sites
 const sites = path.join(root, "sites");
 const BuildSite = (dir, site) => {
@@ -54,9 +57,6 @@ if (fs.existsSync(sites)) {
       }
     });
 }
-
-// Enforce Https
-app.use(enforce.HTTPS({trustProtoHeader: true}));
 
 // Route
 app.get("*", (req, res, next) => {
