@@ -4,8 +4,8 @@ const DecodeEntity = entity => {
   const textarea = document.createElement("textarea");
   textarea.innerHTML = entity;
 
-  // TODO: Handle hypens and all sorts of characters that are hard/impossible to type.
-  // [ò]
+  // TODO: Handle hyphens and all sorts of characters that are hard/impossible to type.
+  // Hyphen test article: "https://en.wikipedia.org/api/rest_v1/page/summary/Nitta_Yoshioki"
   return /\s/.test(textarea.value) ? " " : textarea.value;
 }
 
@@ -21,28 +21,50 @@ class Wikitype {
       buttons: {
         new_article: document.querySelector(".new_article")
       },
-      article: document.querySelector("article"),
-      article_image: document.querySelector(".article_image")
+      input: document.querySelector(".input"),
+      article: document.querySelector("article p"),
+      article_image: document.querySelector(".article_image img")
     }
+
+    // Make sure there is at least one character in the textarea
+    // that can trigger the `deleteContentBackward' event.
+    this.dom.input.value = "d";
 
     // Parsed data
     this.article_tokens;
   
-    // Game State
+    // Game state
     this.current_token_index;
     this.current_sub_token_index;
 
-    // Load Article
-    this.LoadArticle();
-
-    // Add Listener
-    document.body.addEventListener("keydown", e => {
-      if (e.key.length === 1) this.HandleKeyPress(e.key);
+    // Add listener
+    document.body.addEventListener("click", _ => {
+      this.dom.input.focus();
     }, false);
 
-    this.dom.buttons.new_article.addEventListener("click", () => {
+    this.dom.input.addEventListener("input", e => {
+      if (e.data) {
+        this.HandleKeyPress(e.data);
+      } else if (e.inputType === "deleteContentBackward") {
+        // Make sure there is at least one character in the textarea
+        // that can trigger the `deleteContentBackward' event.
+        if (this.dom.input.value.length === 0) {
+          this.dom.input.value = "d";
+        }
+
+        this.HandleKeyPress(null, true);
+      }
+    }, false);
+
+    this.dom.buttons.new_article.addEventListener("click", _ => {
       this.LoadArticle();
     }, false);
+
+    // Load article
+    this.LoadArticle();
+
+    // Capture key inputs
+    this.dom.input.focus();
   }
 
   LoadArticle() {
@@ -57,7 +79,7 @@ class Wikitype {
       const title = data.title;
       const article = data.extract;
       const url = data.content_urls.desktop.page;
-      const img = data.originalimage.source;
+      const img = data.thumbnail.source || undefined;
 
       this.InsertContent(title, article, url, img);
       this.SetActiveToken();
@@ -65,11 +87,14 @@ class Wikitype {
   }
 
   ResetGameState() {
-    this.dom.title.innerText = "Loading…";
-    this.dom.article.innerText = "Loading article…";
+    this.dom.title.innerText = "/wikitype";
+    this.dom.article.innerText = "Fetching new article…";
     this.dom.stats.word_count.innerText = "?";
     this.dom.stats.character_count.innerText = "?";
-    this.dom.article_image.src = "";
+    this.dom.article.style.marginTop = 0;
+
+    this.dom.article_image.classList.remove("visible");
+    this.dom.article_image.classList.add("hidden");
 
     this.current_token_index = 0;
     this.current_sub_token_index = 0;
@@ -86,24 +111,34 @@ class Wikitype {
   InsertContent(title, article, url, img) {
     this.article_tokens = this.TokenizeArticle(article);
 
+    // Stats
+    this.dom.stats.word_count.innerText = article.split(/\b/).length;
+    this.dom.stats.character_count.innerText = article.length;
+    
+    // Title
     this.dom.title.innerText = title;
     this.dom.title.href = url;
     
+    // Copy
     this.dom.article.innerText = "";
-    const paragraph = document.createElement("p");
     this.article_tokens.forEach(token => {
-      paragraph.appendChild(token);
+      this.dom.article.appendChild(token);
     });
-    this.dom.article.appendChild(paragraph);
 
-    this.dom.stats.word_count.innerText = article.split(/\b/).length;
-    this.dom.stats.character_count.innerText = article.length;
-
-    this.dom.article_image.src = img;
+    // Image
+    if (img) {
+      this.dom.article_image.classList.remove("visible");
+      this.dom.article_image.classList.add("hidden");
+      this.dom.article_image.onload = _ => {
+        this.dom.article_image.classList.remove("hidden");
+        this.dom.article_image.classList.add("visible");
+      }
+      this.dom.article_image.src = img;
+    }
   }
 
   TokenizeArticle(article) {
-    return article.split(/\b/)
+    return article.split(/(\s|(?=\s))/)
       .map(word => {
         const token = document.createElement("span");
         const text = document.createTextNode(word);
@@ -116,7 +151,7 @@ class Wikitype {
   }
 
   TokenizeWord(word) {
-    return word.split(/\B/).map(char => {
+    return word.split(/(?=.)/).map(char => {
       const letter = document.createElement("span");
       const text = document.createTextNode(char);
 
@@ -137,15 +172,34 @@ class Wikitype {
     })
   }
 
-  HandleKeyPress(key) {
+  ScrollArticleBy(amount) {
+    let current_amount = /\d+/.exec(this.dom.article.style.marginTop);
+    current_amount = current_amount && +current_amount[0] || 0;
+
+    this.dom.article.style.marginTop = `-${current_amount + amount}px`;
+  }
+
+  FadeOutTokensUntil(token) {
+    const tokens = this.article_tokens;
+
+    for (let i = 0; i < tokens.length; ++i) {
+      if (token === tokens[i]) {
+        break;
+      }
+
+      tokens[i].classList.add("hidden");
+    }
+  }
+
+  HandleKeyPress(key, force) {
     const current_token = this.article_tokens[this.current_token_index];
     const current_sub_token = current_token.childNodes[this.current_sub_token_index];
     const required_key = current_sub_token.innerText;
 
-    if (key === DecodeEntity(required_key)) {
+    if (force || key === DecodeEntity(required_key)) {
       current_sub_token.classList.remove("token_active");
       current_sub_token.classList.add("token_typed");
-      
+
       if (this.current_sub_token_index + 1 < current_token.childNodes.length) {
         this.current_sub_token_index++;
       } else {
@@ -153,6 +207,12 @@ class Wikitype {
           this.current_token_index++;
           this.current_sub_token_index = 0;
           this.SetActiveToken();
+
+          const next_token = this.article_tokens[this.current_token_index];
+          if (current_token.offsetTop !== next_token.offsetTop) {
+            this.ScrollArticleBy(current_token.offsetHeight);
+            this.FadeOutTokensUntil(current_token);
+          }
         } else {
           this.LoadArticle();
         }

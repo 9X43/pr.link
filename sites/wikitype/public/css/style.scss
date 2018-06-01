@@ -18,6 +18,17 @@ li {
   list-style: none;
 }
 
+// Global
+.hidden {
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+}
+
+.visible {
+  opacity: 1;
+  transition: opacity 250ms ease-out;
+}
+
 // Vars
 $hue: 230;
 $black: hsl($hue, 2%, 10%);
@@ -40,6 +51,7 @@ html {
 
 body {
   background: $white;
+  overflow: hidden;
 }
 
 // Header
@@ -71,10 +83,10 @@ h1 {
 nav {
   display: flex;
   flex-direction: row;
-  padding: 30px 4px /* Flush left/right with headline */;
+  padding: 30px 0;
   justify-content: space-between;
   align-items: center;
-  max-width: $content_width;
+  width: $content_width;
   margin: 0 auto;
 }
 
@@ -137,25 +149,44 @@ main {
   align-items: center;
   flex-direction: column;
   margin: $content_padding;
+}
 
-  article {
-    max-width: $content_width;
-    font-family: 'Frank Ruhl Libre', serif;
-    font-size: 1.625rem;
-    line-height: 2.5rem;
+article {
+  width: $content_width;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 1.625rem;
+  line-height: 2.5rem;
+  position: relative;
 
-    p {
-      margin-bottom: 1rem;
-      white-space: pre-wrap;
-      font-kerning: none;
-      font-variant-ligatures: none;
-    }
+  p {
+    margin-bottom: 1rem;
+    white-space: pre-wrap;
+    font-kerning: none;
+    font-variant-ligatures: none;
+    transition: margin 250ms ease;
   }
 }
 
+.input {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+
 .article_image {
-  margin-top: 3rem;
-  max-width: $content_width;
+  position: absolute;
+  width: 350px;
+  left: -350px;
+  padding-right: 5rem;
+  top: -64px;
+  text-align: right;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .token {
