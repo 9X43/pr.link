@@ -17,6 +17,7 @@ module.exports = {
 
     app.get("/random", (req, res, next) => {
       const options = {
+        // url: "https://en.wikipedia.org/api/rest_v1/page/summary/Tetsujin_28-go",
         url: "https://en.wikipedia.org/api/rest_v1/page/random/summary",
         headers: {
           "User-Agent": "pr.link/wikitype (void@ptrckr.me)"
@@ -24,7 +25,9 @@ module.exports = {
       };
 
       request(options, (err, _res, body) => {
-        if (err) res.json({err: err});
+        if (err) {
+          res.json({err: err});
+        }
 
         res.json(JSON.parse(body));
       });

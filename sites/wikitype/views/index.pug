@@ -5,21 +5,24 @@ head
   meta(name = "viewport" content = "width=device-width, initial-scale=1.0, user-scalable=no")
   link(rel = "stylesheet" href = "css/style.css")
 body
-  header
-    div(class = "header_wrapper")
-      h1
-        a(target = "_blank")
-      nav
-        div(class = "button button_main new_article") New Article
-        ol(class = "stats")
-          li(class = "stats_word_count") ?
-          li(class = "stats_divider")
-          li(class = "stats_character_count") ?
-        div(class = "button button_subtle") About
   main
-    textarea(class = "input")
-    article
-      div(class = "article_image")
-        img
-      p
+    nav
+      div(class = "button_list button_list_left")
+        div(class = "button button_highlight new_article") New Article
+      ol(class = "history")
+      //- div(class = "button_list button_list_right")
+      //-   div(class = "button about") About
+    header
+      h1(class = "content_width")
+        a(class = "title" target = "_blank")
+    article(class = "content_width")
+      textarea(class = "input hidden")
+      aside
+        a(class = "originalimage" target = "_blank")
+          div(class = "thumbnail")
+            img
+      div(class = "text_wrapper")
+        p(class = "text")
+      footer(class = "copy")
+        p Wikitype is #[a(class = "--black" href = "/") build by pr.link] with the #[a(href = "https://www.mediawiki.org/wiki/REST_API" target = "_blank") wordpress api].
   script(src = "js/wikitype.js")

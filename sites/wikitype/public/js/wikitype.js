@@ -9,145 +9,189 @@ const DecodeEntity = entity => {
   return /\s/.test(textarea.value) ? " " : textarea.value;
 }
 
-class Wikitype {
-  constructor() {
-    // Setup DOM references
-    this.dom = {
-      title: document.querySelector("h1 a"),
-      stats: {
-        word_count: document.querySelector("li[class$=word_count]"),
-        character_count: document.querySelector("li[class$=character_count]")
-      },
-      buttons: {
-        new_article: document.querySelector(".new_article")
-      },
-      input: document.querySelector(".input"),
-      article: document.querySelector("article p"),
-      article_image: document.querySelector(".article_image img")
+const Wait = ms => new Promise(r => setTimeout(r, ms));
+
+const dom = {
+  buttons: {
+    new_article: document.querySelector(".new_article"),
+    about: document.querySelector(".about")
+  },
+  history: document.querySelector(".history"),
+  input: document.querySelector(".input"),
+  article: {
+    self: document.querySelector("article"),
+    title: document.querySelector(".title"),
+    text: document.querySelector(".text"),
+    originalimage: document.querySelector("a.originalimage"),
+    thumbnail: {
+      wrapper: document.querySelector(".thumbnail"),
+      el: document.querySelector(".thumbnail img")
     }
+  }
+};
+
+class Wikitype {
+  constructor(dom) {
+    // Dom references
+    this.dom = dom;
 
     // Make sure there is at least one character in the textarea
     // that can trigger the `deleteContentBackward' event.
     this.dom.input.value = "d";
 
-    // Parsed data
-    this.article_tokens;
-  
-    // Game state
+    // Transition timings
+    this.transition_duration = 200;
+
+    // State
+    this.article_tokens;  // Parsed text data
     this.current_token_index;
     this.current_sub_token_index;
 
-    // Add listener
-    document.body.addEventListener("click", _ => {
+    this.AddListener();
+
+    // Capture key inputs
+    this.dom.input.focus();
+
+    this.LoadArticle();
+  }
+
+  AddListener() {
+    document.body.addEventListener("click", () => {
       this.dom.input.focus();
     }, false);
 
     this.dom.input.addEventListener("input", e => {
-      if (e.data) {
-        this.HandleKeyPress(e.data);
-      } else if (e.inputType === "deleteContentBackward") {
-        // Make sure there is at least one character in the textarea
-        // that can trigger the `deleteContentBackward' event.
-        if (this.dom.input.value.length === 0) {
-          this.dom.input.value = "d";
-        }
+      if (!document.body.classList.contains("loading_article")) {
+        if (e.data) {
+          this.HandleKeyPress(e.data);
+        } else if (e.inputType === "deleteContentBackward") {
+          // Make sure there is at least one character in the textarea
+          // that can trigger the `deleteContentBackward' event
+          if (this.dom.input.value.length === 0) {
+            this.dom.input.value = "d";
+          }
 
-        this.HandleKeyPress(null, true);
+          this.HandleKeyPress(null, true);
+        }
       }
     }, false);
 
-    this.dom.buttons.new_article.addEventListener("click", _ => {
-      this.LoadArticle();
+    this.dom.buttons.new_article.addEventListener("click", () => {
+      if (!document.body.classList.contains("loading_article")) {
+        this.LoadArticle();
+      }
     }, false);
 
-    // Load article
-    this.LoadArticle();
+    this.dom.history.addEventListener("click", e => {
+      e.target.dataset.url && this.LoadArticle(e.target.dataset.url);
+    }, false);
 
-    // Capture key inputs
-    this.dom.input.focus();
+    this.dom.article.thumbnail.el.onload = () => {
+      document.body.classList.remove("fetching_thumbnail");
+    }
   }
 
-  LoadArticle() {
-    this.ResetGameState();
+  LoadArticle(preset_url = null) {
+    document.body.classList.add("loading_article");
 
-    this.FetchData().then(data => {
-      if (data.err) {
-        // TODO: Handle `fetch' Error.
+    this.ResetState();
+    this.FetchData(preset_url).then(wiki => {
+      if (wiki.err) {
+        // TODO: Handle `fetch' error.
         return;
       }
 
-      const title = data.title;
-      const article = data.extract;
-      const url = data.content_urls.desktop.page;
-      const img = data.thumbnail.source || undefined;
+      const title = wiki.title;
+      const article = wiki.extract;
+      const url = wiki.content_urls.desktop.page;
+      const thumbnail = wiki.thumbnail.source || undefined;
+      const originalimage = wiki.originalimage.source;
+      const api_summary = wiki.api_urls.summary;
 
-      this.InsertContent(title, article, url, img);
+      if (!preset_url) {
+        this.PushArticleToHistory(thumbnail, api_summary);
+      }
+
+      this.article_tokens = this.TokenizeArticle(article);
+      this.InsertContent(title, article, url, thumbnail, originalimage);
       this.SetActiveToken();
+
+      document.body.classList.remove("loading_article");
     });
   }
 
-  ResetGameState() {
-    this.dom.title.innerText = "/wikitype";
-    this.dom.article.innerText = "Fetching new article…";
-    this.dom.stats.word_count.innerText = "?";
-    this.dom.stats.character_count.innerText = "?";
-    this.dom.article.style.marginTop = 0;
-
-    this.dom.article_image.classList.remove("visible");
-    this.dom.article_image.classList.add("hidden");
-
+  ResetState() {
+    // Fade out article
+    document.body.classList.add("switching_article");
+    document.body.classList.add("fetching_thumbnail");
+    
+    // Reset token indexes
     this.current_token_index = 0;
     this.current_sub_token_index = 0;
   }
 
-  FetchData() {
-    return fetch("random")
-      .then(
-        res => res.json(),
-        err => ({err: err})
-      );
+  FetchData(preset_url) {
+    return fetch(preset_url || "random").then(
+      res => res.json(),
+      err => ({err: err})
+    );
   }
 
-  InsertContent(title, article, url, img) {
-    this.article_tokens = this.TokenizeArticle(article);
+  PushArticleToHistory(thumbnail, url) {
+    const li = document.createElement("li");
+    li.setAttribute("style", `background-image: url(${thumbnail});`);
+    li.setAttribute("class", "history_item history_item_inserted");
+    li.setAttribute("data-url", url);
 
-    // Stats
-    this.dom.stats.word_count.innerText = article.split(/\b/).length;
-    this.dom.stats.character_count.innerText = article.length;
-    
-    // Title
-    this.dom.title.innerText = title;
-    this.dom.title.href = url;
-    
-    // Copy
-    this.dom.article.innerText = "";
-    this.article_tokens.forEach(token => {
-      this.dom.article.appendChild(token);
+    const ref = this.dom.history.insertBefore(li, this.dom.history.firstChild);
+    Wait(this.transition_duration).then(() => {
+      ref.classList.remove("history_item_inserted");
+    });
+  }
+
+  InsertContent(title, article, url, thumbnail, originalimage) {
+    // Title, Text
+    Wait(this.transition_duration).then(() => {
+      this.dom.article.title.classList.add("hidden");
+      this.dom.article.text.classList.add("hidden");
+    }).then(() => Wait(this.transition_duration)).then(() => {
+      this.dom.article.text.style.marginTop = 0;
+
+      this.dom.article.title.innerText = title;
+      this.dom.article.title.href = url;
+
+      this.dom.article.text.innerText = "";
+      this.article_tokens.forEach(token => {
+        this.dom.article.text.appendChild(token);
+      });
+
+      this.dom.article.title.classList.remove("hidden");
+      this.dom.article.text.classList.remove("hidden");
+    }).then(() => Wait(10)).then(() => {
+      document.body.classList.remove("switching_article");
     });
 
-    // Image
-    if (img) {
-      this.dom.article_image.classList.remove("visible");
-      this.dom.article_image.classList.add("hidden");
-      this.dom.article_image.onload = _ => {
-        this.dom.article_image.classList.remove("hidden");
-        this.dom.article_image.classList.add("visible");
-      }
-      this.dom.article_image.src = img;
+    // Thumbnail
+    if (thumbnail) {
+      this.dom.article.thumbnail.el.src = thumbnail;
     }
+
+    // Original image
+    this.dom.article.originalimage.href = originalimage;
   }
 
   TokenizeArticle(article) {
-    return article.split(/(\s|(?=\s))/)
-      .map(word => {
-        const token = document.createElement("span");
-        const text = document.createTextNode(word);
+    return article.split(/(\s(?!\s)|(?=\s))/).filter((s, i, a) => {
+      return s.length && !(i > 0 && /\s/.test(s) && /\s/.test(a[i - 1]));
+    }).map(word => {
+      const token = document.createElement("span");
+      const text = document.createTextNode(word);
 
-        token.setAttribute("class", "token");
-        token.appendChild(text);
+      token.setAttribute("class", "token");
+      token.appendChild(text);
 
-        return token;
-      });
+      return token;
+    });
   }
 
   TokenizeWord(word) {
@@ -164,19 +208,16 @@ class Wikitype {
 
   SetActiveToken() {
     let active_token = this.article_tokens[this.current_token_index];
-    const char_tokens = this.TokenizeWord(active_token.innerText);
-
+    let tokens = this.TokenizeWord(active_token.innerText);
     active_token.innerText = "";
-    char_tokens.forEach(token => {
+
+    tokens.forEach(token => {
       active_token.appendChild(token);
     })
   }
 
-  ScrollArticleBy(amount) {
-    let current_amount = /\d+/.exec(this.dom.article.style.marginTop);
-    current_amount = current_amount && +current_amount[0] || 0;
-
-    this.dom.article.style.marginTop = `-${current_amount + amount}px`;
+  ScrollArticleTo(position) {
+    this.dom.article.text.style.marginTop = `-${position}px`;
   }
 
   FadeOutTokensUntil(token) {
@@ -210,7 +251,7 @@ class Wikitype {
 
           const next_token = this.article_tokens[this.current_token_index];
           if (current_token.offsetTop !== next_token.offsetTop) {
-            this.ScrollArticleBy(current_token.offsetHeight);
+            this.ScrollArticleTo(next_token.offsetTop);
             this.FadeOutTokensUntil(current_token);
           }
         } else {
@@ -221,4 +262,4 @@ class Wikitype {
   }
 }
 
-new Wikitype();
+new Wikitype(dom);

@@ -28,7 +28,7 @@ console.log(chalk.cyan("! [Started Build]\n"));
           const result = sass.renderSync({
             file: scss,
             outFile: css_file,
-            outputStyle: "compressed"
+            outputStyle: "expanded"
           });
 
           fs.writeFileSync(css_file, result.css);
