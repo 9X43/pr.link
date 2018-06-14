@@ -1,12 +1,39 @@
 "use strict";
 
-const DecodeEntity = entity => {
-  const textarea = document.createElement("textarea");
-  textarea.innerHTML = entity;
+const MakeEntityTypeable = entity => {
+  // Filter out entities that do not require decoding.
+  if (/^\w{0,1}$/.test(entity)) {
+    return entity;
+  }
 
-  // TODO: Handle hyphens and all sorts of characters that are hard/impossible to type.
-  // Hyphen test article: "https://en.wikipedia.org/api/rest_v1/page/summary/Nitta_Yoshioki"
-  return /\s/.test(textarea.value) ? " " : textarea.value;
+  const t = document.createElement("textarea");
+  let decoded = null;
+
+  t.innerHTML = entity;
+  decoded = t.value;
+
+  // Spaces
+  if (/\s/.test(decoded)) {
+    return "\u0020";
+  }
+
+  // Hyphens and dashes
+  if (new RegExp([
+    "2010",  // HYPHEN
+    "2011",  // NON-BREAKING HYPHEN
+    "2012",  // FIGURE DASH
+    "2013",  // EN DASH
+    "2014",  // EM DASH
+    "2015",  // HORIZONTAL BAR
+    "FE58",  // SMALL EM DASH
+    "FE63",  // SMALL HYPHEN-MINUS
+    "FF0D"   // FULLWIDTH HYPHEN-MINUS
+  ].map(x => `\\u${x}`).join("|")).test(decoded)) {
+    return "\u002D";
+  }
+
+  // Default
+  return decoded;
 }
 
 const Wait = ms => new Promise(r => setTimeout(r, ms));
@@ -237,7 +264,7 @@ class Wikitype {
     const current_sub_token = current_token.childNodes[this.current_sub_token_index];
     const required_key = current_sub_token.innerText;
 
-    if (force || key === DecodeEntity(required_key)) {
+    if (force || key === MakeEntityTypeable(required_key)) {
       current_sub_token.classList.remove("token_active");
       current_sub_token.classList.add("token_typed");
 
