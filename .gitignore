@@ -1,17 +1,9 @@
-# Node
-node_modules
-certificates
+// System
+.DS_Store
+certs/
 
-# npm
-*.log
+// Node
+node_modules/
 
-# macOs
-*.DS_Store
-
-# compiled files
-*.css
-*.html
-
-# sublime text
-*.sublime-workspace
-*.sublime-project
+// Build Output
+**/dest/

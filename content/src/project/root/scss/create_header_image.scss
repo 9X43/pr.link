@@ -1,0 +1,9 @@
+@import "_reset";
+@import "_settings";
+
+
+body {
+  width: 100%;
+  height: 100%;
+  @include flex-center;
+}

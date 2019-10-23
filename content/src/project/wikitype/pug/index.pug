@@ -1,0 +1,67 @@
+doctype html
+html.dark-theme
+  head
+    meta(charset="utf-8")
+    title pr.link/wikitype
+    link(href="data:" rel="icon")
+    link(href="css/style.css" type="text/css" rel="stylesheet")
+  body    
+    template#article
+      article
+        aside.thumbnail-wrapper
+          img.thumbnail
+        div.content
+          header
+            h1
+            span.word-count
+          div.extract
+  
+    input#stdin(type="text")
+  
+    aside.interface
+      div.fontsize-picker
+        div.icon(data-action="increase")
+          span +
+        div.icon.label
+          span Aa
+        div.icon(data-action="decrease")
+          span -
+          
+      ol.shortcuts
+        li
+          span.key Tab
+          span.desc Skip Article
+        li
+          span.key Esc
+          span.desc Skip Character
+        li
+          span.key Enter
+          span.desc Read complete Article
+        li
+          span.key Ctrl + Z
+          span.desc Zen Mode
+          
+      div.language-picker
+        ol.languages
+          each lang in languages
+            li
+              input(type="checkbox" id=lang.code checked=(lang.code === "en"))
+              label(for=lang.code data-langcode=lang.code data-lang=lang.language)
+        div.icon
+          div.back &#1071;
+          div.front A
+          
+      div.theme-picker
+        ul
+
+    main.articles(style="font-size: 1.8rem;")
+
+    script(src="js/typeable.js")
+    script(src="js/measure.js")
+    script(src="js/wikipedia.js")
+    script(src="js/wikitype.js")
+    script(src="js/article.js")
+    script(src="js/language-picker.js")
+    script const wikitype = new Wikitype();
+    script(src="js/theme-picker.js")
+    script(src="js/fontsize-picker.js")
