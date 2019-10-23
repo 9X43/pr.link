@@ -4,6 +4,8 @@
   "description": "Personal Webspace",
   "main": "index.js",
   "scripts": {
+    "heroku-prebuild": "bash heroku-prebuild.sh",
+    "heroku-postbuild": "bash heroku-postbuild.sh",
     "build": "gulp build",
     "serve": "node index.js",
     "start": "npm run build && npm run serve"
