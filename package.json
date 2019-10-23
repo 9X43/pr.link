@@ -16,14 +16,12 @@
     "express-session": "1.16.2",
     "express-sslify": "1.2.0",
     "fonts.pr.link": "github:ptrckr/fonts.pr.link",
+    "gulp": "^4.0.2",
+    "gulp-pug": "^4.0.1",
+    "gulp-sass": "^4.0.2",
     "helmet": "^3.21.2",
+    "node-sass": "^4.12.0",
     "pug": "2.0.4"
-  },
-  "devDependencies": {
-    "gulp": "4.0.2",
-    "gulp-pug": "4.0.1",
-    "gulp-sass": "4.0.2",
-    "node-sass": "4.12.0"
   },
   "engines": {
     "node": "12.13.0"
