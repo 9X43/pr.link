@@ -5,8 +5,8 @@ const theme_picker = document.querySelector(".theme-picker");
 Array.from(document.styleSheets[0].cssRules)
   .filter(css => css.selectorText)
   .map(css => css.selectorText)
-  .filter(s => /.theme-picker ul li.(.*)-theme/.test(s))
-  .map(css => /li\.(?<theme>[^-]*)-theme/.exec(css).groups.theme)
+  .filter(s => /\.theme-picker ul li\.(.*)-theme/.test(s))
+  .map(css => css.match(/li\.([^-]*)-theme/)[1])
   .forEach(theme => {
     const parent = theme_picker.querySelector("ul");
     const item = document.createElement("li");
