@@ -85,7 +85,7 @@ const create_scss_task = config => create_task(config, {
 // Move Assets
 const create_move_task = (config, fmove) => create_task(config, {
   fin: fmove,
-  glob: "*",
+  glob: "**",
   fout: fmove
 });
 
