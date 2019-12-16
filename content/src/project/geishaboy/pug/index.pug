@@ -1,49 +1,50 @@
+- let effects = collection.series.reduce((acc, series) => acc.concat(series.effects), [])
+- let collected = effects.filter(effect => effect.collected)
+
 doctype html
 html
   head
     meta(charset="utf-8")
-    title GeishaBoy.tf
+    title= `(${collected.length}/${effects.filter(effect => !effect.unknown).length}) geishaboy.tf`
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(rel="icon" type="image/png" href="img/favicon.png" sizes="32x32")
-    link(href="css/style.css" type="text/css" rel="stylesheet")
+    link(href="css/style.css" type="text/css" rel="stylesheet")  
   body
     header
-      div.heading
-        h1 Frog leaps into pond.#[br]Lotus blossoms fall to earth.#[br]Medic has girl's hair.
-    main
-      article.intro(id="buying")
-        .wrapper
-          div.text
-            p I'm building a collection of all unusual Geisha Boy effects. Currently the collection consists of #[span= collection.stats.collected] of #[span= collection.stats.total] available#[span.footnote &#xE0DD;] Geishas.
-            p If you're selling a Geisha Boy that I'm missing feel free to #[a(href="https://steamcommunity.com/id/ptrckr/") add me on Steam] to negotiate, or #[a(href="https://steamcommunity.com/tradeoffer/new/?partner=99967435&token=eCs5JlvU") send me trade offer] if you agree with the price I'm offering.
-            p.note I can also buy the item from the Steam Community Market or Marketplace.tf. I will not trade with users marked on steamrep.com. &#xE0DD;:&nbsp;Geishas that have been indexed by backpack.tf.
-          div.buying-list
-            header Currently Buying  ❤
-            ol
-              - let effects = collection.series.reduce((acc, update) => acc.concat(update.effects), []);
-              each effect in effects.filter(e => e.price).sort((a, b) => b.price - a.price)
-                li
-                  p
-                    span.buying-name= effect.name
-                    span.buying-price= `${effect.price} TF2 Keys (~${Math.floor(effect.price * collection.key_exchange)}€)`
-      each update in collection.series
-        - const collected = update.stats.collected;
-        - const total = update.stats.total;
-        - const percent = Math.floor(100 / update.stats.total * update.stats.collected);
-        
-        article
-          .wrapper
-            .meta
-              h2.update-name= update.name
-              div.stats= `${collected}/${total}, ${percent}%`
-              ol.effect-list
-                each effect in update.effects
-                  li(data-collected= effect.collected data-is-unknown= effect.unknown)
-                    span= effect.name
-            ol.image-list
-              each effect in update.effects.filter(e => e.collected)
-                li
-                  a(href= `https://backpack.tf/item/${effect.item_id}`)
-                    if effect.duped
-                      img.duped(src="img/duped.gif")
-                    img(src= `img/collected/${effect.name.toLowerCase().replace(/\s/g, "_")}.jpg`)
+      a(
+        href="https://backpack.tf/classifieds?steamid=76561198060233163"
+        data-dir="rtl"
+        data-text="BUYING GEISHA BOYS  $$$  "
+      ).marquee.header
+
+    main  
+      each effect in effects
+        -
+          let href = effect.collected
+            ? `https://backpack.tf/item/${effect.item_id}`
+            : "https://steamcommunity.com/id/ptrckr"
+        a.geisha(href=href class=effect.collected ? "collected" : "missing")
+          img.effect-img(src=`img/particles/${effect.id}.png`)
+          div.effect-meta
+            span.effect-name=effect.name
+            ul.effect-info
+              if effect.collected
+                li.effect-status=effect.item_id
+              else if effect.price
+                li.effect-status=`Buying for ~${Math.floor(effect.price * collection.key_exchange)}€`
+              else if effect.unknown
+                li.effect-status="Inexistent"
+              if effect.duped 
+                li.effect-duped="Duped"
+
+    footer
+      div(
+        data-dir="rtl"
+        data-text="FROG LEAPS INTO POND. LOTUS BLOSSOMS FALL TO EARTH. MEDIC HAS GIRL'S HAIR. "
+      ).marquee.footer
+      div(
+        data-dir="ltr"
+        data-text=`PARTICLE IMAGES BY BACKPACK.TF  ©  ${new Date(Date.now()).getFullYear()} PR.LINK  ©  `
+      ).marquee.credit
+
+    script(src="js/marquee.js")

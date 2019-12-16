@@ -280,7 +280,8 @@ module.exports = exports = {
         {
           id: 76,
           name: "Poisoned Shadows",
-          unknown: true
+          unknown: true,
+          price: 150
         },
         {
           id: 77,
@@ -428,7 +429,7 @@ module.exports = exports = {
           id: 69,
           name: "Anti-Freeze",
           collected: true,
-          item_id: 7331236340
+          item_id: 1678449000
         },
         {
           id: 72,
