@@ -1,3 +1,4 @@
+
 module.exports = {
   name: "GeishaBoy.tf",
   description: "A site featuring my collection of the item \"Geisha Boy\" from the video game Team Fortress 2.",
@@ -5,6 +6,8 @@ module.exports = {
   created: "NOV 2019",
 
   display_on_frontpage: true,
+
+  vhost: "www.geishaboy.tf",
 
   pug_data: {
     get collection() {
