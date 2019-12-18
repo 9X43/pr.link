@@ -286,7 +286,8 @@ module.exports = exports = {
         {
           id: 77,
           name: "Something Burning This Way Comes",
-          unknown: true
+          unknown: true,
+          price: 150
         },
         {
           id: 78,
@@ -303,8 +304,8 @@ module.exports = exports = {
         {
           id: 80,
           name: "Demonflame",
-          price: 200,
-          unknown: true
+          unknown: true,
+          price: 200
         }
       ]
     },
@@ -355,16 +356,19 @@ module.exports = exports = {
         {
           id: 109,
           name: "Starstorm Insomnia",
+          price: 30,
           unknown: true
         },
         {
           id: 110,
           name: "Starstorm Slumber",
+          price: 30,
           unknown: true
         },
         {
           id: 108,
           name: "Tesla Coil",
+          price: 30,
           unknown: true
         },
         {

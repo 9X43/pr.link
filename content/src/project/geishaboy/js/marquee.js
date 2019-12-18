@@ -9,10 +9,9 @@ function marquee(node) {
   node.appendChild(ul);
   marquee.fill_text(ul);
 
-  const width = ul.querySelector("li:first-child").getBoundingClientRect().width;
-
-  const style = marquee.create_style(id, dir, width);
-  ul.style.animation = marquee.create_animation_css(id, width);
+  const li_width = ul.querySelector("li").getBoundingClientRect().width;
+  const style = marquee.create_style(id, dir, li_width);
+  ul.style.animation = marquee.create_animation_css(id, li_width);
   document.head.appendChild(style);
 }
 
@@ -36,16 +35,16 @@ marquee.fill_text = function(ul) {
 
 marquee.create_animation_css = function(id, width) {
   return marquee.css.animation
-    .replace("$ID", id)
-    .replace("$DUR", 100 / 3000 * width)
+    .replace("ID", id)
+    .replace("DUR", 100 / 3000 * width)
 }
 
 marquee.create_style = function(id, dir, width) {
   const style = document.createElement("style");
   const text = marquee.css.keyframes
-    .replace("$ID", id)
-    .replace(/\$DIR/g, (dir === "rtl") ? "left" : "right")
-    .replace("$MV", width);
+    .replace("ID", id)
+    .replace(/DIR/g, (dir === "rtl") ? "left" : "right")
+    .replace("MV", width);
 
   style.appendChild(document.createTextNode(text));
 
@@ -53,8 +52,8 @@ marquee.create_style = function(id, dir, width) {
 }
 
 marquee.css = {
-  keyframes: "@keyframes marquee_$ID { from { $DIR: 0; } to { $DIR: -$MVpx; } }",
-  animation: "marquee_$ID $DURs linear infinite"
+  keyframes: "@keyframes marquee_ID { from { DIR: 0; } to { DIR: -MVpx; } }",
+  animation: "marquee_ID DURs linear infinite"
 }
 
 marquee.id = (function*() {
@@ -67,6 +66,6 @@ marquee.id = (function*() {
 
 window.addEventListener("load", () => {
   setTimeout(() => {
-    Array.from(document.querySelectorAll(".marquee")).forEach(node => marquee(node));
+    Array.from(document.querySelectorAll(".marquee")).forEach(marquee);
   }, 100);
 });
