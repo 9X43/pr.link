@@ -3,7 +3,7 @@ module.exports = {
   name: "GeishaBoy.tf",
   description: "A site featuring my collection of the item \"Geisha Boy\" from the video game Team Fortress 2.",
   keywords: ["Website", "Team Fortress 2"],
-  created: "NOV 2019",
+  created: "DEC 2019",
 
   display_on_frontpage: true,
 
