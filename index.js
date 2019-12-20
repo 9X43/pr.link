@@ -18,7 +18,7 @@ const content = {
 const helmet = require("helmet");
 const enforce = require("express-sslify");
 const pug = require("pug");
-const pages_iterator = require("./pages_iterator.js");
+const configs = require("./configs.js");
 let whitelisted_domains = [make_domain(root_domain)];
 const fontstack = require("fonts.pr.link");
 const vhost = require("vhost");
@@ -35,8 +35,7 @@ app.use(helmet());
 // Fonts
 app.use("/fonts", fontstack(whitelisted_domains));
 
-
-pages_iterator.iterate(page => {
+configs.forEach(page => {
   if (page.is_root) {
     app.use("/", express.static(path.join(content.dest, page.basename)));
   }

@@ -10,9 +10,9 @@ module.exports = {
 
   pug_data: {
     get projects() {
-      const pages_iterator = require("../../pages_iterator.js");
-
-      return pages_iterator.configs.filter(config => config.basename !== "root" && config.display_on_frontpage)
+      return require("../../configs.js").filter(
+        page => page.basename !== "root" && page.display_on_frontpage
+      );
     }
   }
 }

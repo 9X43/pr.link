@@ -5,7 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const stream = require("stream");
 const { src, dest, parallel } = require("gulp");
-const pages_iterator = require("./pages_iterator.js");
+const configs = require("./configs.js");
 
 // Paths
 const content = {
@@ -83,7 +83,7 @@ const create_move_task = (page, fmove) => create_task(page, {
 });
 
 // Create tasks
-pages_iterator.iterate(page => {
+configs.forEach(page => {
   // Pug
   if (fs.existsSync(path.join(page.full_path, "pug")))
     tasks.push(create_pug_task(page));
