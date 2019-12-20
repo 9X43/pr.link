@@ -1,0 +1,149 @@
+.articles {
+  position: fixed;
+  top: 20vh;
+  right: 0;
+  left: 0;
+  // transition: top 250ms ease;
+
+  article {
+    display: grid;
+    grid-template-columns: 1fr $content-width 1fr;
+
+    &:nth-child(even) {
+      .thumbnail-wrapper {
+        grid-column: 3/4;
+      }
+    }
+
+    &:nth-child(odd) {
+      .thumbnail-wrapper {
+        grid-column: 1/2;
+      }
+    }
+
+    &:not(.active_article) {
+      opacity: .3;
+      filter: blur(.2em);
+
+        html.zen-mode & {
+          opacity: .1;
+        }
+    }
+
+  }
+
+  .thumbnail-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    grid-row: 1;
+
+    .thumbnail {
+      position: absolute;
+      opacity: 1;
+      transition: opacity 350ms ease-out;
+      max-width: 200px;
+
+      &.loading {
+        opacity: 0;
+      }
+    }
+  }
+
+  .content {
+      grid-column: 2/3;
+      grid-row: 1;
+
+      &::after {
+        content: "";
+        display: block;
+        height: 10rem;
+      }
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid;
+    padding: 1em 0 3em;
+    font-size: 1rem;
+
+    @at-root article.active_article header {
+      position: sticky;
+      position: -webkit-sticky;
+      top: $body-padding * 2 + $icon-size;
+      z-index: 9;
+    }
+
+    @include theme(("border-top-color": "area-light"));
+  }
+
+  h1 {
+    position: relative;
+    font-size: inherit;
+
+    &::before {
+      content: "";
+      height: 1px;
+      width: 100%;
+      left: 0;
+      position: absolute;
+      top: calc(-1em - 1px);
+
+      @include theme(("background": "font"));
+    }
+
+    &::after {
+      content: "  —  " attr(data-language);
+      white-space: pre;
+      font-weight: normal;
+    }
+  }
+
+  .word-count {
+    opacity: .5;
+
+    &::after {
+      content: " Word(s)";
+    }
+  }
+
+  .extract {
+    // font-size: 1.6rem;
+    line-height: 1.5;
+    font-feature-settings: "ss01", "ss02", "case", "cv10", "cv11";
+    white-space: pre-wrap;
+
+    p:not(:last-child) {
+      margin-bottom: 1em;
+    }
+
+    .token {
+      display: inline-block;
+    }
+
+    .active-token {
+      opacity: 1;
+    }
+
+    .active-token,
+    .typed-token {
+      position: relative;
+
+      @include theme(("color": "font-dimmed"));
+    }
+
+    .active-token::before {
+      content: attr(data-value);
+      white-space: pre;
+      position: absolute;
+      right: 0;
+
+      @include theme((
+        "color": "area",
+        "background": "font"
+      ));
+    }
+  }
+}
