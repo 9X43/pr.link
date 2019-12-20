@@ -73,7 +73,7 @@ const create_scss_task = page => create_task(page, {
 // Move Assets
 const create_move_task = (page, fmove) => create_task(page, {
   fin: fmove,
-  glob: "**",
+  glob: "!(assets)/**",
   fout: fmove
 });
 
