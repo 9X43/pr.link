@@ -1,0 +1,243 @@
+@font-face {
+  font-family: "ColfaxWeb";
+  src: url("/fonts/colfax/thin/normal.eot");
+  src: url("/fonts/colfax/thin/normal.eot?#iefix") format("embedded-opentype"), url("/fonts/colfax/thin/normal.woff2") format("woff2"), url("/fonts/colfax/thin/normal.woff") format("woff");
+  font-weight: 200;
+  font-style: normal; }
+
+@font-face {
+  font-family: "ColfaxWeb";
+  src: url("/fonts/colfax/thin/italic.eot");
+  src: url("/fonts/colfax/thin/italic.eot?#iefix") format("embedded-opentype"), url("/fonts/colfax/thin/italic.woff2") format("woff2"), url("/fonts/colfax/thin/italic.woff") format("woff");
+  font-weight: 200;
+  font-style: italic; }
+
+@font-face {
+  font-family: "ColfaxWeb";
+  src: url("/fonts/colfax/regular/normal.eot");
+  src: url("/fonts/colfax/regular/normal.eot?#iefix") format("embedded-opentype"), url("/fonts/colfax/regular/normal.woff2") format("woff2"), url("/fonts/colfax/regular/normal.woff") format("woff");
+  font-weight: 400;
+  font-style: normal; }
+
+@font-face {
+  font-family: "ColfaxWeb";
+  src: url("/fonts/colfax/regular/italic.eot");
+  src: url("/fonts/colfax/regular/italic.eot?#iefix") format("embedded-opentype"), url("/fonts/colfax/regular/italic.woff2") format("woff2"), url("/fonts/colfax/regular/italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic; }
+
+@font-face {
+  font-family: "ColfaxWeb";
+  src: url("/fonts/colfax/bold/normal.eot");
+  src: url("/fonts/colfax/bold/normal.eot?#iefix") format("embedded-opentype"), url("/fonts/colfax/bold/normal.woff2") format("woff2"), url("/fonts/colfax/bold/normal.woff") format("woff");
+  font-weight: 700;
+  font-style: normal; }
+
+@font-face {
+  font-family: "ColfaxWeb";
+  src: url("/fonts/colfax/bold/italic.eot");
+  src: url("/fonts/colfax/bold/italic.eot?#iefix") format("embedded-opentype"), url("/fonts/colfax/bold/italic.woff2") format("woff2"), url("/fonts/colfax/bold/italic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic; }
+
+/*
+Font: 		Trash
+Style: 		Regular
+URL: 		https://www.youworkforthem.com/font/T10598/trash
+Foundry: 	Bruta Types
+Foundry: 	https://www.youworkforthem.com/designer/1240/bruta-types
+Copyright:
+Version: 	17
+Created:	March 20, 2019
+License: 	https://www.youworkforthem.com/font-license
+License: 	The WebFont(s) listed in this document must follow the YouWorkForThem
+			WebFont license rules. All other parties are strictly restricted
+			from using the WebFonts(s) listed without a purchased license.
+			All details above must always remain unaltered and visible in your CSS.
+*/
+/*
+Font: 		Trash
+Style: 		Bold
+URL: 		https://www.youworkforthem.com/font/T10598/trash
+Foundry: 	Bruta Types
+Foundry: 	https://www.youworkforthem.com/designer/1240/bruta-types
+Copyright:
+Version: 	17
+Created:	March 20, 2019
+License: 	https://www.youworkforthem.com/font-license
+License: 	The WebFont(s) listed in this document must follow the YouWorkForThem
+			WebFont license rules. All other parties are strictly restricted
+			from using the WebFonts(s) listed without a purchased license.
+			All details above must always remain unaltered and visible in your CSS.
+*/
+@font-face {
+  font-family: "TrashWeb";
+  src: url("/fonts/trash/regular/normal.eot");
+  src: url("/fonts/trash/regular/normal.eot?#iefix") format("embedded-opentype"), url("/fonts/trash/regular/normal.woff2") format("woff2"), url("/fonts/trash/regular/normal.woff") format("woff"), url("/fonts/trash/regular/normal.ttf") format("truetype"), url("/fonts/trash/regular/normal.svg#youworkforthem") format("svg");
+  font-weight: 400;
+  font-style: normal; }
+
+@font-face {
+  font-family: "TrashWeb";
+  src: url("/fonts/trash/bold/normal.eot");
+  src: url("/fonts/trash/bold/normal.eot?#iefix") format("embedded-opentype"), url("/fonts/trash/bold/normal.woff2") format("woff2"), url("/fonts/trash/bold/normal.woff") format("woff"), url("/fonts/trash/bold/normal.ttf") format("truetype"), url("/fonts/trash/bold/normal.svg#youworkforthem") format("svg");
+  font-weight: 700;
+  font-style: normal; }
+
+/* https://rsms.me/inter */
+@font-face {
+  font-family: "InterWeb";
+  src: url("/fonts/inter/regular/normal.woff2") format("woff2"), url("/fonts/inter/regular/normal.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; }
+
+@font-face {
+  font-family: "InterWeb";
+  src: url("/fonts/inter/regular/italic.woff2") format("woff2"), url("/fonts/inter/regular/italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap; }
+
+@font-face {
+  font-family: "InterWeb";
+  src: url("/fonts/inter/bold/normal.woff2") format("woff2"), url("/fonts/inter/bold/normal.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap; }
+
+@font-face {
+  font-family: "InterWeb";
+  src: url("/fonts/inter/bold/italic.woff2") format("woff2"), url("/fonts/inter/bold/italic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap; }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+a {
+  text-decoration: none;
+  color: inherit; }
+
+ol {
+  list-style: none; }
+
+html, body {
+  width: 100%;
+  height: 100%; }
+
+h1, h2 {
+  font-size: inherit; }
+
+html {
+  background: black;
+  font-family: InterWeb; }
+
+header {
+  width: 100%;
+  height: 50%;
+  background: url(../img/background.jpg);
+  background-size: cover;
+  background-position: bottom;
+  position: relative; }
+
+.marquee {
+  font-family: TrashWeb;
+  font-size: 60px;
+  font-weight: bold;
+  line-height: 1.5;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden; }
+  .marquee.header {
+    position: absolute;
+    bottom: 0;
+    color: #ffe8d1;
+    transform: translateY(50%);
+    z-index: 1; }
+  .marquee.footer {
+    color: #655648;
+    background: #ffe8d1;
+    font-size: 30px; }
+  .marquee.credit {
+    background: #9153ee;
+    color: white;
+    font-size: 16px; }
+  .marquee ul {
+    position: relative;
+    white-space: nowrap; }
+    .marquee ul li {
+      display: inline-block;
+      white-space: pre;
+      /* Vertically center uppercase text */
+      margin-top: 0.2em; }
+
+@media (max-width: 700px) {
+  .marquee {
+    font-size: 30px; } }
+
+main {
+  position: relative;
+  padding: 100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 160px);
+  grid-gap: 50px 20px;
+  justify-content: center; }
+
+@media (max-width: 700px) {
+  main {
+    padding: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 20px; } }
+
+.effect-img {
+  width: 100%; }
+  .geisha.missing .effect-img {
+    filter: grayscale(0.7);
+    opacity: .2; }
+
+.effect-meta {
+  color: #fff;
+  text-align: center;
+  white-space: pre-wrap;
+  padding-top: 1rem;
+  font-size: 14px; }
+
+.effect-name {
+  font-family: TrashWeb;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1;
+  display: block;
+  color: #ffe8d1; }
+  .geisha.missing .effect-name {
+    color: #696359;
+    text-decoration: line-through;
+    text-decoration-color: #f00;
+    text-decoration-style: wavy; }
+
+.effect-info {
+  list-style: none;
+  margin-top: 6px; }
+  .effect-info li {
+    display: inline-block;
+    color: #696359;
+    background: #1d1c1b;
+    letter-spacing: .02em;
+    font-size: 12px;
+    line-height: 1;
+    padding: 3px 6px;
+    border-radius: 3px;
+    margin: 0 5px; }
+  .geisha.missing .effect-info .effect-status {
+    background: none;
+    box-shadow: inset 0 0 0 1px #2b2927; }
+  .geisha.collected .effect-info .effect-status::before {
+    content: "#"; }
+  .effect-info .effect-duped {
+    background: #321006;
+    color: #864d41; }
