@@ -1,40 +1,35 @@
 "use strict";
 
-// Modules
 const path = require("path");
 const fs = require("fs");
 const deep_clone = obj => JSON.parse(JSON.stringify(obj));
 
-// Config
-class config_parser {
+class parser {
   static from(cpath) {
     cpath = path.join(cpath, "config.js");
 
-    let config;
-
-    if (!fs.existsSync(cpath))
+    if (!fs.existsSync(cpath)) {
       throw new Error(`Config not found: '${cpath}'.`);
+    }
 
+    let config;
     try {
       config = require(cpath);
-
-      config_parser.assert_keys(Object.keys(config));
+      parser._assert_keys(Object.keys(config));
     } catch(e) {
       throw new Error(`Config require failed: '${cpath}'.\n${e}`);
     }
 
-    config = Object.assign(deep_clone(config_parser.default_config), config);
-
+    config = Object.assign(deep_clone(parser._default_config), config);
     config.full_path = path.dirname(cpath);
     config.basename = path.basename(config.full_path);
-
     config.preview_type = /\.mp4$/.test(config.preview) ? "video" : "image";
 
     return config;
   }
 
-  static assert_keys(keys) {
-    const invalid_keys = keys.filter(k => !config_parser.default_config.hasOwnProperty(k));
+  static _assert_keys(keys) {
+    const invalid_keys = keys.filter(k => !parser._default_config.hasOwnProperty(k));
 
     if (invalid_keys.length) {
       throw new Error(`Found ${invalid_keys.length} (${invalid_keys.join(", ")}) invalid key(s).`);
@@ -42,22 +37,20 @@ class config_parser {
   }
 };
 
-config_parser.default_config = Object.freeze({
-  // System
-  basename: "project-name",
-  full_path: "content/project/project-name",
-  type: "tbr",
+parser._default_config = Object.freeze({
+  // Path
+  basename: undefined,
+  full_path: undefined,
 
   // Meta
-  name: "Project Name",
-  description: "Short description about the project.",
-  keywords: ["Website"],
-  created: "JAN 0000",
+  name: undefined,
+  description: undefined,
+  keywords: [],
+  created: undefined,
 
   // Preview
-  extern_url: false,
   preview: "img/preview.jpg",
-  preview_type: "image|video",
+  preview_type: "image",
 
   // Flags
   display_on_frontpage: false,
@@ -71,4 +64,4 @@ config_parser.default_config = Object.freeze({
   pug_data: {}
 });
 
-module.exports = exports = config_parser;
+module.exports = parser;
