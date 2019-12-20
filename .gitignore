@@ -6,4 +6,5 @@ certs/
 node_modules/
 
 // Build Output
-**/dest/
+dest/
+docs/
