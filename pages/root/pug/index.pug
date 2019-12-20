@@ -27,12 +27,12 @@ html
       ol.projects
         each project in projects
           li.project-wrapper
-            a.project(href= (project.extern_url ? project.extern_url : `${project.type}/${project.basename}`) data-basename= project.basename)
+            a.project(href= (project.extern_url ? project.extern_url : `${project.basename}`) data-basename= project.basename)
               div.project-preview(class="project-preview" style= `background: ${project.preview_background_color}`)
                 if project.preview_type === "image"
-                  img(src= `${project.type}/${project.basename}/${project.preview}`)
+                  img(src= `${project.basename}/${project.preview}`)
                 else if project.preview_type === "video"
-                  video(src= `${project.type}/${project.basename}/${project.preview}` playsinline autoplay loop)
+                  video(src= `${project.basename}/${project.preview}` playsinline autoplay loop)
               div.project-data
                 h3.project-title= project.name
                 p.project-description= project.description

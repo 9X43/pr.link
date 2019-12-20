@@ -1,12 +1,8 @@
 "use strict";
 
-
-// Modules
 const path = require("path");
 const fs = require("fs");
 
-
-// Config
 module.exports = {
   name: "root",
 
@@ -14,11 +10,9 @@ module.exports = {
 
   pug_data: {
     get projects() {
-      const content_iterator = require("../../../content_iterator.js");
+      const pages_iterator = require("../../pages_iterator.js");
 
-      return content_iterator
-        .get_contents()
-        .filter(config => config.basename !== "root" && config.display_on_frontpage);
+      return pages_iterator.configs.filter(config => config.basename !== "root" && config.display_on_frontpage)
     }
   }
 }

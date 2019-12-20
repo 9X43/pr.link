@@ -10,16 +10,15 @@ const make_domain = domain => is_live ? domain : domain.replace(/(?<=\.)([^\.]+)
 // Paths
 const root = __dirname;
 const content = {
-  root: path.join(root, "content"),
-  src: path.join(root, "content", "src"),
-  dest: path.join(root, "content", "dest")
+  src: path.join(root, "pages"),
+  dest: path.join(root, "dest")
 };
 
 // Modules
 const helmet = require("helmet");
 const enforce = require("express-sslify");
 const pug = require("pug");
-const content_iterator = require(path.join(content.root, "content_iterator.js"));
+const pages_iterator = require("./pages_iterator.js");
 let whitelisted_domains = [make_domain(root_domain)];
 const fontstack = require("fonts.pr.link");
 const vhost = require("vhost");
@@ -33,33 +32,26 @@ app.set("trust proxy", 1);
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(helmet());
 
-// Add project specific routes
-content_iterator.iterate(config => {
-  if (config.vhost) {
-    whitelisted_domains.push(make_domain(config.vhost));
-  }
-
-  if (config.route) {
-    app.use(`/${config.type}/${config.basename}`, config.route(express.Router()));
-  }
-});
-
-// Static assets
+// Fonts
 app.use("/fonts", fontstack(whitelisted_domains));
 
-content_iterator.iterate_dirs(dir => {
-  content_iterator.iterate(config => {
-    if (config.is_root) {
-      app.use("/", express.static(path.join(content.dest, dir, config.basename)));
-    }
 
-    if (config.vhost) {
-      app.use(vhost(make_domain(config.vhost), express.static(path.join(content.dest, dir, config.basename))));
-    }
-  }, [dir]);
+pages_iterator.iterate(page => {
+  if (page.is_root) {
+    app.use("/", express.static(path.join(content.dest, page.basename)));
+  }
 
-  app.use(`/${dir}`, express.static(path.join(content.dest, dir)));
+  if (page.vhost) {
+    whitelisted_domains.push(make_domain(page.vhost));
+    app.use(vhost(make_domain(page.vhost), express.static(path.join(content.dest, page.basename))));
+  }
+
+  if (page.route) {
+    app.use(`/${page.basename}`, page.route(express.Router()));
+  }
 });
+
+app.use("/", express.static(content.dest));
 
 // 404
 app.get("*", (req, res) => {

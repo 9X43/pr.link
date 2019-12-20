@@ -1,15 +1,15 @@
 "use strict";
 
-
 // Modules
 const path = require("path");
 const fs = require("fs");
 const deep_clone = obj => JSON.parse(JSON.stringify(obj));
 
-
 // Config
 class config_parser {
   static from(cpath) {
+    cpath = path.join(cpath, "config.js");
+
     let config;
 
     if (!fs.existsSync(cpath))
@@ -42,12 +42,11 @@ class config_parser {
   }
 };
 
-
 config_parser.default_config = Object.freeze({
   // System
   basename: "project-name",
   full_path: "content/project/project-name",
-  type: "project|experimental|blog",
+  type: "tbr",
 
   // Meta
   name: "Project Name",
@@ -71,6 +70,5 @@ config_parser.default_config = Object.freeze({
   // Data
   pug_data: {}
 });
-
 
 module.exports = exports = config_parser;
