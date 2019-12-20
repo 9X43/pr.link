@@ -8,11 +8,7 @@ const is_live = process.env.NODE_ENV === "production";
 const make_domain = domain => is_live ? domain : domain.replace(/(?<=\.)([^\.]+)$/, "local");
 
 // Paths
-const root = __dirname;
-const content = {
-  src: path.join(root, "pages"),
-  dest: path.join(root, "dest")
-};
+const paths = require("./paths.js");
 
 // Modules
 const helmet = require("helmet");
@@ -37,12 +33,12 @@ app.use("/fonts", fontstack(whitelisted_domains));
 
 configs.forEach(page => {
   if (page.is_root) {
-    app.use("/", express.static(path.join(content.dest, page.basename)));
+    app.use("/", express.static(path.join(paths.dst, page.basename)));
   }
 
   if (page.vhost) {
     whitelisted_domains.push(make_domain(page.vhost));
-    app.use(vhost(make_domain(page.vhost), express.static(path.join(content.dest, page.basename))));
+    app.use(vhost(make_domain(page.vhost), express.static(path.join(paths.dst, page.basename))));
   }
 
   if (page.route) {
@@ -50,7 +46,7 @@ configs.forEach(page => {
   }
 });
 
-app.use("/", express.static(content.dest));
+app.use("/", express.static(paths.dst));
 
 // 404
 app.get("*", (req, res) => {
@@ -71,7 +67,7 @@ if (is_live) {
 
   const https = require("https");
   https.createServer({
-    key:  fs.readFileSync(path.join(root, "certs/localhost.key")),
-    cert: fs.readFileSync(path.join(root, "certs/localhost.crt"))
+    key:  fs.readFileSync(path.join(paths.root, "certs/localhost.key")),
+    cert: fs.readFileSync(path.join(paths.root, "certs/localhost.crt"))
   }, app).listen(ports.https);
 }

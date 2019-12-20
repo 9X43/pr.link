@@ -8,12 +8,7 @@ const { src, dest, parallel } = require("gulp");
 const configs = require("./configs.js");
 
 // Paths
-const content = {
-  root: {
-    src: path.join(__dirname, "pages"),
-    dest: path.join(__dirname, "dest")
-  }
-};
+const paths = require("./paths.js");
 
 // Tasks
 let tasks = [];
@@ -46,9 +41,9 @@ create_transform_queue.is_done = cbs => Object.keys(cbs).reduce((b, i) => b && c
 
 function create_task(page, _gulp) {
   function _task() {
-    return src(path.join(content.root.src, page.basename, _gulp.fin, _gulp.glob))
+    return src(path.join(paths.src, page.basename, _gulp.fin, _gulp.glob))
       .pipe(create_transform_queue(_gulp.transforms))
-      .pipe(dest(path.join(content.root.dest, page.basename, _gulp.fout)));
+      .pipe(dest(path.join(paths.dst, page.basename, _gulp.fout)));
   }
 
   _task.displayName = `Transforming ${path.join(page.basename, _gulp.fin)}`;
