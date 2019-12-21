@@ -7,8 +7,8 @@
     "heroku-prebuild": "bash heroku-prebuild.sh",
     "heroku-postbuild": "bash heroku-postbuild.sh",
     "build": "gulp build",
-    "serve": "node index.js",
-    "start": "npm run build && npm run serve"
+    "buildrun": "npm run build && npm run start",
+    "start": "node index.js"
   },
   "author": "Patrick Rügheimer",
   "dependencies": {
