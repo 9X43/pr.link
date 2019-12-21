@@ -99,5 +99,10 @@ configs.forEach(page => {
     tasks.push(create_move_task(page, "img"));
 });
 
+// CNAME
+tasks.push(
+  () => src(path.join(paths.src, "CNAME")).pipe(dest(paths.dst, "CNAME"))
+);
+
 // Exports
 exports.build = parallel(tasks.length ? tasks : noop => noop());
