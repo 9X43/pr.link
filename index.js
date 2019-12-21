@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 // Helper functions
-const root_domain = "www.pr.link";
+const root_domain = "pr.link";
 const is_live = process.env.NODE_ENV === "production";
 const make_domain = domain => is_live ? domain : domain.replace(/(?<=\.)([^\.]+)$/, "local");
 
