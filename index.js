@@ -28,9 +28,6 @@ app.set("trust proxy", 1);
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(helmet());
 
-// Fonts
-app.use("/fonts", fontstack(whitelisted_domains));
-
 configs.forEach(page => {
   if (page.is_root) {
     app.use("/", express.static(path.join(paths.dst, page.basename)));
@@ -50,6 +47,10 @@ configs.forEach(page => {
   }
 });
 
+// Fonts
+app.use("/fonts", fontstack(whitelisted_domains));
+
+// Static files
 app.use("/", express.static(paths.dst));
 
 // 404
