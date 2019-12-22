@@ -43,7 +43,8 @@ function create_task(page, _gulp) {
   function _task() {
     return src([
         path.join(paths.src, page.basename, _gulp.fin, _gulp.glob),
-        path.join("!", paths.src, page.basename, _gulp.fin, "assets", _gulp.glob)
+        path.join("!", paths.src, page.basename, _gulp.fin, "assets", _gulp.glob),
+        path.join("!", paths.src, page.basename, _gulp.fin, "assets")
       ])
       .pipe(create_transform_queue(_gulp.transforms))
       .pipe(dest(path.join(paths.dst, page.basename === "root" ? "" : page.basename, _gulp.fout)));
@@ -76,7 +77,7 @@ const create_scss_task = page => create_task(page, {
 // Move Assets
 const create_move_task = (page, fmove) => create_task(page, {
   fin: fmove,
-  glob: "**",
+  glob: "**/!(_*)",
   fout: fmove
 });
 

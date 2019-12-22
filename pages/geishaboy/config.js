@@ -11,7 +11,7 @@ module.exports = {
 
   pug_data: {
     get collection() {
-      let meta = require("./js/geisha_data.js");
+      let meta = require("./js/_geisha_data.js");
 
       meta.stats = {
         collected: 0,
