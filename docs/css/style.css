@@ -96,14 +96,14 @@ License: 	The WebFont(s) listed in this document must follow the YouWorkForThem
 @font-face {
   font-family: "TrashWeb";
   src: url("https://d.pr.link/fonts/trash/regular/normal.eot");
-  src: url("https://d.pr.link/fonts/trash/regular/normal.eot?#iefix") format("embedded-opentype"), url("https://d.pr.link/fonts/trash/regular/normal.woff2") format("woff2"), url("https://d.pr.link/fonts/trash/regular/normal.woff") format("woff"), url("https://d.pr.link/fonts/trash/regular/normal.ttf") format("truetype"), url("https://d.pr.link/fonts/trash/regular/normal.svg#youworkforthem") format("svg");
+  src: url("https://d.pr.link/fonts/trash/regular/normal.eot?#iefix") format("embedded-opentype"), url("https://d.pr.link/fonts/trash/regular/normal.woff2") format("woff2"), url("https://d.pr.link/fonts/trash/regular/normal.woff") format("woff"), url("https://d.pr.link/fonts/trash/regular/normal.svg#youworkforthem") format("svg");
   font-weight: 400;
   font-style: normal; }
 
 @font-face {
   font-family: "TrashWeb";
   src: url("https://d.pr.link/fonts/trash/bold/normal.eot");
-  src: url("https://d.pr.link/fonts/trash/bold/normal.eot?#iefix") format("embedded-opentype"), url("https://d.pr.link/fonts/trash/bold/normal.woff2") format("woff2"), url("https://d.pr.link/fonts/trash/bold/normal.woff") format("woff"), url("https://d.pr.link/fonts/trash/bold/normal.ttf") format("truetype"), url("https://d.pr.link/fonts/trash/bold/normal.svg#youworkforthem") format("svg");
+  src: url("https://d.pr.link/fonts/trash/bold/normal.eot?#iefix") format("embedded-opentype"), url("https://d.pr.link/fonts/trash/bold/normal.woff2") format("woff2"), url("https://d.pr.link/fonts/trash/bold/normal.woff") format("woff"), url("https://d.pr.link/fonts/trash/bold/normal.svg#youworkforthem") format("svg");
   font-weight: 700;
   font-style: normal; }
 
