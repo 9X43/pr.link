@@ -36,6 +36,10 @@ configs.forEach(page => {
     app.use("/", express.static(path.join(paths.dst, page.basename)));
   }
 
+  if (page.whitelist_domain)
+    whitelisted_domains.push(make_domain(page.whitelist_domain));
+  }
+
   if (page.vhost) {
     whitelisted_domains.push(make_domain(page.vhost));
     app.use(vhost(make_domain(page.vhost), express.static(path.join(paths.dst, page.basename))));
