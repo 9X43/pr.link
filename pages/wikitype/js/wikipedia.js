@@ -17,6 +17,6 @@ class WikipediaApi {
   }
 
   static fetch_random(lang) {
-    return WikipediaApi.fetch(`https://d.pr.link/random/${lang}`);
+    return WikipediaApi.fetch(`https://d.pr.link/wikitype/random/${lang}`);
   }
 }
