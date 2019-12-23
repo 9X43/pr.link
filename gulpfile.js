@@ -8,7 +8,7 @@ const { src, dest, parallel } = require("gulp");
 const configs = require("./configs.js");
 
 // Paths
-const paths = require("./paths.js");
+const { paths } = require("./globals.js");
 
 // Tasks
 let tasks = [];

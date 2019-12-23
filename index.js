@@ -10,7 +10,7 @@ const is_live = process.env.NODE_ENV === "production";
 const make_domain = domain => is_live ? domain : domain.replace(/(?<=\.)([^\.]+)$/, "local:8443");
 
 // Paths
-const paths = require("./paths.js");
+const { paths } = require("./globals.js");
 
 // Modules
 const helmet = require("helmet");
