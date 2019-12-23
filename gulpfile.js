@@ -120,7 +120,8 @@ configs.forEach(page => {
 
 // CNAME
 tasks.push(
-  () => src(path.join(paths.src, "CNAME")).pipe(dest(paths.dst, "CNAME"))
+  () => src(path.join(paths.src, "CNAME")).pipe(dest(paths.dst, "CNAME")),
+  () => src(path.join(paths.src, "favicon.png")).pipe(dest(paths.dst, "favicon.png"))
 );
 
 // Exports
