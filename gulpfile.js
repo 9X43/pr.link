@@ -19,34 +19,36 @@ function create_transform_queue(transforms) {
     objectMode: true,
     transform: (vinyl, encoding, callback) => {
       if (!transforms) {
-        callback(null, vinyl);
-        return;
+        return void callback(null, vinyl);
       }
 
-      let called_back = {};
+      function call_transform(queue_idx = 0) {
+        const current_transform = transforms[queue_idx];
 
-      transforms.forEach((transform, i) => {
-        called_back[String(i)] = false;
+        current_transform.write(vinyl, encoding, () => {
+          if (queue_idx >= transforms.length - 1) {
+            return void callback(null, vinyl);
+          }
 
-        transform.write(vinyl, encoding, () => {
-          called_back[String(i)] = true;
-          create_transform_queue.is_done(called_back) && callback(null, vinyl);
-        })
-      })
+          call_transform(++queue_idx);
+        });
+      };
+
+      call_transform();
     }
   });
 };
 
-create_transform_queue.is_done = cbs => Object.keys(cbs).reduce((b, i) => b && cbs[i], true);
-
 function create_task(page, _gulp) {
+  const transform_queue = create_transform_queue(_gulp.transforms);
+
   function _task() {
     return src([
         path.join(paths.src, page.basename, _gulp.fin, _gulp.glob),
         path.join("!", paths.src, page.basename, _gulp.fin, "assets", _gulp.glob),
         path.join("!", paths.src, page.basename, _gulp.fin, "assets")
       ])
-      .pipe(create_transform_queue(_gulp.transforms))
+      .pipe(transform_queue)
       .pipe(dest(path.join(paths.dst, page.basename === "root" ? "" : page.basename, _gulp.fout)));
   }
 
@@ -71,7 +73,23 @@ const create_scss_task = page => create_task(page, {
   fin: "scss",
   glob: "**/!(_*)",
   fout: "css",
-  transforms: [scss().on("error", scss.logError)]
+  transforms: [
+    scss().on("error", scss.logError),
+    stream.Transform({
+      objectMode: true,
+      transform: (vinyl, encoding, callback) => {
+        if (process.env.NODE_ENV !== "production") {
+          vinyl.contents = Buffer.from(
+            vinyl.contents.toString().replace(/d\.pr\.link/g, domain => {
+              return "d.pr.local:8443";
+            })
+          );
+        }
+
+        callback(null, vinyl);
+      }
+    })
+  ]
 });
 
 // Move Assets
