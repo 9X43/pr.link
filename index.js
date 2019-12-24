@@ -12,6 +12,7 @@ const helmet = require("helmet");
 const enforce = require("express-sslify");
 const pug = require("pug");
 const configs = require("./configs.js");
+const cors = require("./cors.js")(domain.env_aware.whitelisted);
 const fontstack = require("fonts.pr.link");
 const vhost = require("vhost");
 const express = require("express");
@@ -23,6 +24,7 @@ app.set("trust proxy", 1);
 // Middleware
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(helmet());
+app.use(cors);
 
 configs.forEach(page => {
   if (page.is_root) {
