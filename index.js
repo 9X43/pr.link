@@ -4,20 +4,15 @@ global.ptrckr = {};
 const path = require("path");
 const fs = require("fs");
 
-// Helper functions
-const root_domain = "pr.link";
-const is_live = process.env.NODE_ENV === "production";
-const make_domain = domain => is_live ? domain : domain.replace(/(?<=\.)([^\.]+)$/, "local:8443");
-
-// Paths
-const { paths } = require("./globals.js");
+// Globals
+const { is_live, make_domain, domain, paths } = require("./globals.js");
 
 // Modules
 const helmet = require("helmet");
 const enforce = require("express-sslify");
 const pug = require("pug");
 const configs = require("./configs.js");
-let whitelisted_domains = [make_domain(root_domain)];
+let whitelisted_domains = [domain.env_aware.static_root, domain.env_aware.dynamic_root];
 const fontstack = require("fonts.pr.link");
 const vhost = require("vhost");
 const express = require("express");
