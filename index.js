@@ -12,7 +12,6 @@ const helmet = require("helmet");
 const enforce = require("express-sslify");
 const pug = require("pug");
 const configs = require("./configs.js");
-let whitelisted_domains = [domain.env_aware.static_root, domain.env_aware.dynamic_root];
 const fontstack = require("fonts.pr.link");
 const vhost = require("vhost");
 const express = require("express");
@@ -30,12 +29,7 @@ configs.forEach(page => {
     app.use("/", express.static(path.join(paths.dst, page.basename)));
   }
 
-  if (page.whitelist_domain) {
-    whitelisted_domains.push(make_domain(page.whitelist_domain));
-  }
-
   if (page.vhost) {
-    whitelisted_domains.push(make_domain(page.vhost));
     app.use(vhost(make_domain(page.vhost), express.static(path.join(paths.dst, page.basename))));
   }
 
@@ -45,7 +39,7 @@ configs.forEach(page => {
 });
 
 // Fonts
-app.use("/fonts", fontstack(whitelisted_domains));
+app.use("/fonts", fontstack(domain.env_aware.whitelisted));
 
 // Static files
 app.use("/", express.static(paths.dst));

@@ -1,4 +1,5 @@
 const path = require("path");
+const configs = require("./configs.js");
 
 const is_live = process.env.NODE_ENV === "production";
 const make_domain = domain => is_live ? domain : domain.replace(/(?<=\.)([^\.]+)$/, "local:8443");
@@ -12,6 +13,17 @@ domain.dynamic_root = `d.${domain.static_root}`;
 
 domain.env_aware.static_root = make_domain("pr.link");
 domain.env_aware.dynamic_root = make_domain(`d.${domain.static_root}`);
+
+domain.env_aware.whitelisted = [domain.env_aware.static_root, domain.env_aware.dynamic_root];
+configs.forEach(page => {
+  if (page.whitelist_domain) {
+    domain.env_aware.whitelisted.push(make_domain(page.whitelist_domain));
+  }
+
+  if (page.vhost) {
+    domain.env_aware.whitelisted.push(make_domain(page.vhost));
+  }
+});
 
 module.exports = {
   is_live: is_live,
