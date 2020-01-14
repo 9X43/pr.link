@@ -135,10 +135,12 @@ configs.forEach(page => {
 });
 
 // CNAME
-tasks.push(
-  () => src(path.join(paths.src, "CNAME")).pipe(dest(paths.dst, "CNAME")),
-  () => src(path.join(paths.src, "favicon.png")).pipe(dest(paths.dst, "favicon.png"))
-);
+if (!process.env.BUILD_PAGE) {
+  tasks.push(
+    () => src(path.join(paths.src, "CNAME")).pipe(dest(paths.dst, "CNAME")),
+    () => src(path.join(paths.src, "favicon.png")).pipe(dest(paths.dst, "favicon.png"))
+  );
+}
 
 // Exports
 exports.build = parallel(tasks.length ? tasks : noop => noop());
