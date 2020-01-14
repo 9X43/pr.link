@@ -102,6 +102,10 @@ const create_move_task = (page, fmove, transforms = false) => create_task(page, 
 
 // Create tasks
 configs.forEach(page => {
+  if (process.env.BUILD_PAGE && process.env.BUILD_PAGE !== page.name) {
+    return;
+  }
+
   // Pug
   if (fs.existsSync(path.join(page.full_path, "pug")))
     tasks.push(create_pug_task(page));
