@@ -65,7 +65,7 @@ if (is_live) {
 
   const https = require("https");
   https.createServer({
-    key:  fs.readFileSync(path.join(paths.root, "certs/localhost.key")),
-    cert: fs.readFileSync(path.join(paths.root, "certs/localhost.crt"))
+    key:  fs.readFileSync(path.join(paths.root, "certs/pr.local.key")),
+    cert: fs.readFileSync(path.join(paths.root, "certs/pr.local.crt"))
   }, app).listen(ports.https);
 }
