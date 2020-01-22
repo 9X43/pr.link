@@ -3,14 +3,16 @@ function cors(whitelist) {
     whitelist = [whitelist];
   }
 
-  whitelist = whitelist.map(d => `https://${d}`);
+  whitelist = whitelist.map(domain => `https://${domain}`);
 
   return function(req, res, next) {
+    if (req.originalUrl.indexOf(".") === -1)
+      return void next();
+
     const referer = req.headers.referer;
 
-    if (!referer) {
+    if (!referer)
       return void next();
-    }
 
     for (let i = 0; i < whitelist.length; ++i) {
       const whitelisted_domain = whitelist[i];
