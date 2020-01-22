@@ -7,10 +7,10 @@ const make_domain = domain => is_live ? domain : domain.replace(/(?<=\.)([^\.]+)
 const root_domain = "pr.link";
 const domain = {
   apex: root_domain,
-  www: `www${root_domain}`,
+  www: `www.${root_domain}`,
   env_aware: {
     apex: make_domain(root_domain),
-    www: make_domain(`www${root_domain}`)
+    www: make_domain(`www.${root_domain}`)
   }
 };
 
