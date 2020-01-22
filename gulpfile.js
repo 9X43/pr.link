@@ -8,7 +8,13 @@ const { src, dest, parallel } = require("gulp");
 const configs = require("./configs.js");
 
 // Globals
-const { paths } = require("./globals.js");
+const { paths, domain } = require("./globals.js");
+
+// Create global sass lookup file
+fs.writeFileSync(
+  "globals.scss",
+  `$domain: "${domain.env_aware.apex}";`
+);
 
 // Tasks
 let tasks = [];
@@ -73,7 +79,7 @@ const create_scss_task = page => create_task(page, {
   fin: "scss",
   glob: "**/!(_*)",
   fout: "css",
-  transforms: [scss().on("error", scss.logError)]
+  transforms: [scss({ includePaths: "./" }).on("error", scss.logError)]
 });
 
 // Move Assets
