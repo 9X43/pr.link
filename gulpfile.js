@@ -8,7 +8,7 @@ const { src, dest, parallel } = require("gulp");
 const configs = require("./configs.js");
 
 // Globals
-const { is_live, domain, paths } = require("./globals.js");
+const { paths } = require("./globals.js");
 
 // Tasks
 let tasks = [];
@@ -73,23 +73,7 @@ const create_scss_task = page => create_task(page, {
   fin: "scss",
   glob: "**/!(_*)",
   fout: "css",
-  transforms: [
-    scss().on("error", scss.logError),
-    stream.Transform({
-      objectMode: true,
-      transform: (vinyl, encoding, callback) => {
-        if (process.env.NODE_ENV !== "production") {
-          vinyl.contents = Buffer.from(
-            vinyl.contents.toString().replace(/d\.pr\.link/g, domain => {
-              return "d.pr.local:8443";
-            })
-          );
-        }
-
-        callback(null, vinyl);
-      }
-    })
-  ]
+  transforms: [scss().on("error", scss.logError)]
 });
 
 // Move Assets
@@ -116,18 +100,7 @@ configs.forEach(page => {
 
   // JS
   if (fs.existsSync(path.join(page.full_path, "js")))
-    tasks.push(create_move_task(page, "js", [stream.Transform({
-      objectMode: true,
-      transform: (vinyl, encoding, callback) => {
-        vinyl.contents = Buffer.from(
-          vinyl.contents.toString().replace(/DYNAMIC_ROOT/g, () => {
-            return domain.env_aware.dynamic_root;
-          })
-        );
-
-        callback(null, vinyl);
-      }
-    })]));
+    tasks.push(create_move_task(page, "js"));
 
   // Images
   if (fs.existsSync(path.join(page.full_path, "img")))
