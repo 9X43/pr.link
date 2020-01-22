@@ -23,6 +23,12 @@ app.set("trust proxy", 1);
 
 // Middleware
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use((req, res, next) => {
+  if (req.headers.host.substr(0, 3) === "www")
+    return res.redirect(301, `https://${domain.env_aware.apex}`);
+  else
+    return next();
+});
 app.use(helmet());
 app.use(cors);
 
