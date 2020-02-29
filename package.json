@@ -8,10 +8,10 @@
 
     "build:local": "NODE_ENV=development npm run heroku-prebuild && gulp build && npm run heroku-postbuild",
     "build:production": "gulp build",
-    
+
     "start:local": "NODE_ENV=development COOKIE_SECRET=9Jjmc7Jtws node index.js",
     "start:production": "node index.js",
-    "start": "npm run build:production start:production"
+    "start": "npm run build:production && npm run start:production"
   },
   "author": "Patrick Rügheimer",
   "dependencies": {
