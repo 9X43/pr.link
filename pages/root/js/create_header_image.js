@@ -36,4 +36,4 @@ img.onload = () => {
   }
 }
 
-img.src = "img/self_f.jpg";
+img.src = "/static/root/img/self_4.jpg";

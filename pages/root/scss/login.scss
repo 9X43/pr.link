@@ -1,0 +1,55 @@
+@import "_reset";
+@import "_base";
+@import "node_modules/fonts.pr.link/_style.scss";
+
+
+html {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-family: TrashWeb;
+  background: black;
+  color: white;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"] {
+  display: block;
+  border: 0;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 3px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  background: #fff;
+  color: #000;
+  font-family: InterWeb;
+  width: 250px;
+  font-size: 14px;
+}
+
+input[type="submit"] {
+  border: 0;
+  height: 40px;
+  border-radius: 50px;
+  background: #004fff;
+  color: #fff;
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: InterWeb;
+  cursor: pointer;
+}

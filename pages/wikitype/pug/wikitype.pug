@@ -1,0 +1,70 @@
+doctype html
+html.dark-theme
+  head
+    meta(charset="utf-8")
+    title pr.link/wikitype
+    link(href="/favicon.png" rel="icon" type="image/png")
+    link(href="/static/wikitype/css/wikitype.css" type="text/css" rel="stylesheet")
+  body    
+    template#article
+      article
+        aside.thumbnail-wrapper
+          div.thumbnail-sticky-box
+            img.thumbnail
+        div.content
+          header
+            h1
+            span.word-count
+          div.extract
+  
+    input#stdin(type="text")
+ 
+    ol.shortcuts
+      li
+        kbd.keys
+          kbd ⇥
+        span.desc Skip Word
+      li
+        kbd.keys
+          kbd ctrl
+          kbd shift
+          kbd L
+        span.desc Select Article Languages
+      li
+        kbd.keys
+          kbd ctrl
+          kbd M
+        span.desc Distraction Free Mode
+      li
+        kbd.keys
+          kbd ctrl
+          kbd 1&#x02009;&#x02212;&#x02009;4
+        span.desc Change Theme
+      li
+        kbd.keys
+          kbd ctrl
+          kbd +&#x02009;/&#x02009;&#8722;
+        span.desc Adjust Font Size
+      li
+        kbd.keys
+          kbd ⏎
+        span.desc Open Article in new Tab
+        
+    div.language-picker.hidden
+      input(type="text" placeholder="+/- to add/remove languages [e. g. +de ru -en]")
+      ol.languages
+        each lang in languages
+          li
+            input(type="checkbox" id=lang.code)
+            label(for=lang.code data-langcode=lang.code data-langname=lang.language)
+
+    main.articles(style="font-size: 1.8rem;")
+
+    script(src="/static/wikitype/js/events.js")
+    script(src="/static/wikitype/js/mutex.js")
+    script(src="/static/wikitype/js/interface.js")
+    script(src="/static/wikitype/js/language_picker.js")
+    script(src="/static/wikitype/js/wikipedia_api.js")
+    script(src="/static/wikitype/js/input_controller.js")
+    script(src="/static/wikitype/js/article.js")
+    script(src="/static/wikitype/js/article_controller.js")

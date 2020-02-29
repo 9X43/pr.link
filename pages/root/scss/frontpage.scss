@@ -1,0 +1,374 @@
+@import "_settings";
+@import "_reset";
+@import "_base";
+@import "node_modules/fonts.pr.link/_style.scss";
+
+
+// ˙ HTML
+
+@media (min-width: 700px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+
+// ˙ Body
+
+body {
+  font-family: TrashWeb;
+  background: black;
+  color: white;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 25rem 2rem;
+  overflow-x: hidden;
+}
+
+@media (min-width: 700px) {
+  body {
+    // margin: 15rem 0;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    margin: 5rem 0;
+  }
+}
+
+
+// ˙ Header
+
+header {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 2.7ex;
+  text-align: center;
+  position: relative;
+  margin-bottom: 15rem;
+  justify-content: center;
+  cursor: default;
+}
+
+@media (min-width: 700px) {
+  header {
+    font-size: 2.5rem;
+    white-space: pre;
+  }
+}
+
+@media (max-width: 700px) {
+  header {
+    font-size: 1.5rem;
+    margin-bottom: 5rem;
+  }
+}
+
+
+// ˙ Canvas Header Background
+
+$rgb-canvas-size: 300px;
+
+.rgb-container {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - (1em - 1ch) - 1ex);
+  width: $rgb-canvas-size;
+  height: $rgb-canvas-size;
+  margin-left: -#{$rgb-canvas-size / 2};
+  margin-top: -#{$rgb-canvas-size / 2};
+  z-index: -9;
+  opacity: .4;
+
+  div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: lighten;
+    background: url(/static/root/img/header.jpg);
+
+    &.r {
+      z-index: 30;
+    }
+
+    &.g {
+      z-index: 20;
+      background-position: -300px 0;
+    }
+
+    &.b {
+      background-position: -600px 0;
+      z-index: 10;
+    }
+  }
+}
+
+
+// ˙ Navigation
+
+.nav {
+  font-family: ColfaxWeb;
+
+  display: grid;
+  grid-gap: 3ex;
+  grid-auto-flow: column;
+  margin-top: 2rem;
+
+  font-variant: all-petite-caps;
+  font-size: 1.25rem;
+  line-height: 1ex;
+  letter-spacing: 0.08em;
+
+  li {
+    opacity: .5;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@media (min-width: 700px) {
+  .nav {
+    li {
+      padding-bottom: 0.8ex;
+      border-bottom: 1px solid;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .nav {
+    li {
+      font-size: 0;
+      line-height: 0;
+
+      a {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+
+  .github { background-image: url(/static/root/img/github.svg); }
+  .steam { background-image: url(/static/root/img/steam.svg); }
+}
+
+
+// ˙ Projects
+
+$projects-grid-gap: 8rem;
+$preview-data-gap: 4rem;
+
+.projects {
+  display: grid;
+  grid-gap: $projects-grid-gap;
+  grid-template-columns: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  counter-reset: project;
+}
+
+.project {
+  $project-root: &;
+
+  display: flex;
+  align-items: center;
+  transition: transform 250ms ease-out;
+  position: relative;
+
+  &::after {
+    content: counter(project, upper-roman);
+    position: absolute;
+    font-size: 2rem;
+    counter-increment: project;
+    font-weight: bold;
+    font-variant: all-petite-caps;
+    pointer-events: none;
+  }
+
+  .project-wrapper:nth-child(odd) & {
+    $project-odd: & !global;
+
+    flex-direction: row-reverse;
+    transform-origin: center right;
+
+    &::after {
+      right: -#{$preview-data-gap};
+      transform: translateX(100%);
+    }
+  }
+
+  .project-wrapper:nth-child(even) & {
+    $project-even: & !global;
+
+    flex-direction: row;
+    transform-origin: center left;
+
+    &::after {
+      left: -#{$preview-data-gap};
+      transform: translateX(-100%);
+    }
+  }
+
+  &-wrapper {
+    display: inline-block;
+    cursor: default;
+    min-width: 0;
+  }
+
+  &:hover {
+    #{$project-root} {
+      &-title {
+        text-decoration: underline;
+      }
+
+      &-preview::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  // Image Preview
+  &-preview {
+    box-sizing: content-box;
+    position: relative;
+    line-height: 0;
+    width: 300px;
+    flex-shrink: 0;
+
+    .project-wrapper:nth-child(even) & {
+      $project-preview-even: & !global;
+
+      margin-right: $preview-data-gap;
+    }
+
+    .project-wrapper:nth-child(odd) & {
+      $project-preview-odd: & !global;
+
+      margin-left: $preview-data-gap;
+    }
+
+    & > * {
+      width: 100%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      mix-blend-mode: exclusion;
+      background: white;
+    }
+  }
+
+  // Project Data
+  &-data {
+    display: flex;
+    flex-direction: column;
+    word-break: break-word;
+    min-width: 0;
+
+    .project-wrapper:nth-child(even) & {
+      $project-data-even: & !global;
+
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .project-wrapper:nth-child(odd) & {
+      $project-data-odd: & !global;
+
+      align-items: flex-end;
+      text-align: right;
+    }
+  }
+
+  &-title {
+    font-variant: all-petite-caps;
+    line-height: 1ex;
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  &-description {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    padding: 1.5ex 0;
+  }
+
+  &-meta {
+    font-family: ColfaxWeb;
+    font-variant: all-petite-caps;
+    font-size: 1.25rem;
+    line-height: 1em;
+    letter-spacing: 0.08em;
+    opacity: .4;
+    word-break: break-word;
+    margin: -0.5ex 0;
+
+    & li {
+      display: inline;
+    }
+
+    & li:not(:last-child)::after {
+      content: "•";
+      padding: 0 .5ch;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  #{$project-odd},
+  #{$project-even} {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transform: rotate(0);
+  }
+
+  #{$project-preview-odd},
+  #{$project-preview-even} {
+    margin: 0;
+    margin-bottom: 2em;
+    height: auto;
+    max-width: 100%;
+
+    & img {
+      height: auto;
+      max-width: 100%;
+    }
+  }
+
+  #{$project-data-odd},
+  #{$project-data-even} {
+    align-items: center;
+    text-align: center;
+  }
+
+  .project-meta {
+    line-height: 1em;
+  }
+}

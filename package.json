@@ -2,16 +2,21 @@
   "name": "pr.link",
   "version": "2.0.0",
   "description": "Personal Webspace",
-  "main": "index.js",
   "scripts": {
     "heroku-prebuild": "bash heroku-prebuild.sh",
     "heroku-postbuild": "bash heroku-postbuild.sh",
-    "build:local": "gulp build",
-    "build:production": "NODE_ENV=production gulp build",
-    "start": "node index.js"
+
+    "build:local": "NODE_ENV=development npm run heroku-prebuild && gulp build && npm run heroku-postbuild",
+    "build:production": "gulp build",
+    
+    "start:local": "NODE_ENV=development COOKIE_SECRET=9Jjmc7Jtws node index.js",
+    "start:production": "node index.js",
+    "start": "npm run build:production start:production"
   },
   "author": "Patrick Rügheimer",
   "dependencies": {
+    "bcrypt": "^3.0.7",
+    "cookie-session": "^1.4.0",
     "express": "4.17.1",
     "express-session": "1.16.2",
     "express-sslify": "1.2.0",
@@ -21,11 +26,12 @@
     "gulp-sass": "^4.0.2",
     "helmet": "^3.21.2",
     "node-sass": "^4.13.1",
+    "pg": "^7.17.1",
     "pug": "2.0.4",
     "vhost": "^3.0.2"
   },
   "engines": {
-    "node": "12.13.0"
+    "node": "13.0.1"
   },
   "private": "true"
 }

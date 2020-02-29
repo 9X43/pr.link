@@ -1,4 +1,4 @@
-"use strict";
+global._root = __dirname;
 
 // Modules
 const path = require("path");
@@ -6,120 +6,113 @@ const fs = require("fs");
 const stream = require("stream");
 const { src, dest, parallel } = require("gulp");
 const configs = require("./configs.js");
-
-// Globals
 const { paths, domain } = require("./globals.js");
 
-// Create global sass lookup file
-fs.writeFileSync(
-  "globals.scss",
-  `$domain: "${domain.env_aware.apex}";`
-);
-
-// Tasks
-let tasks = [];
-
 // Helper functions
-function create_transform_queue(transforms) {
+function prepend_relative_dir(dirname) {
   return stream.Transform({
     objectMode: true,
     transform: (vinyl, encoding, callback) => {
-      if (!transforms) {
-        return void callback(null, vinyl);
-      }
-
-      function call_transform(queue_idx = 0) {
-        const current_transform = transforms[queue_idx];
-
-        current_transform.write(vinyl, encoding, () => {
-          if (queue_idx >= transforms.length - 1) {
-            return void callback(null, vinyl);
-          }
-
-          call_transform(++queue_idx);
-        });
-      };
-
-      call_transform();
+      vinyl.path = path.join(vinyl.base, dirname, vinyl.relative);
+      callback(null, vinyl);
     }
   });
-};
+}
 
-function create_task(page, _gulp) {
-  const transform_queue = create_transform_queue(_gulp.transforms);
+function remove_trailing_dir(depth = 1) {
+  return stream.Transform({
+    objectMode: true,
+    transform: (vinyl, encoding, callback) => {
+      let _depth = depth;
+      while(_depth--)
+        vinyl.dirname = path.dirname(vinyl.dirname);
 
-  function _task() {
-    return src([
-        path.join(paths.src, page.basename, _gulp.fin, _gulp.glob),
-        path.join("!", paths.src, page.basename, _gulp.fin, "assets", _gulp.glob),
-        path.join("!", paths.src, page.basename, _gulp.fin, "assets")
-      ])
-      .pipe(transform_queue)
-      .pipe(dest(path.join(paths.dst, page.basename === "root" ? "" : page.basename, _gulp.fout)));
-  }
+      callback(null, vinyl);
+    }
+  });
+}
 
-  _task.displayName = `Transforming ${path.join(page.basename, _gulp.fin)}`;
-
-  return _task;
-};
+function rename_trailing_dir_to(replacement) {
+  return stream.Transform({
+    objectMode: true,
+    transform: (vinyl, encoding, callback) => {
+      vinyl.dirname = path.join(path.dirname(vinyl.dirname), replacement);
+      callback(null, vinyl);
+    }
+  });
+}
 
 // Transform .pug to .html
-const pug = require("gulp-pug");
-const create_pug_task = page => create_task(page, {
-  fin: "pug",
-  glob: "*.pug",
-  fout: "",
-  transforms: [pug({ locals: page.pug_data })]
-});
+function pug_to_html(done) {
+  const pug = require("gulp-pug");
 
-// Transform .scss to .css
-const scss = require("gulp-sass");
-scss.compiler = require("node-sass");
-const create_scss_task = page => create_task(page, {
-  fin: "scss",
-  glob: "**/!(_*)",
-  fout: "css",
-  transforms: [scss({ includePaths: "./" }).on("error", scss.logError)]
-});
+  function render(idx = 0) {
+    const project = configs[idx];
+    const folder = project.basename;
+    const pug_data = project.pug_data;
+    const source = src(
+      `${paths.src}/${folder}/**/pug/*.pug`,
+      { base: paths.src }
+    );
 
-// Move Assets
-const create_move_task = (page, fmove, transforms = false) => create_task(page, {
-  fin: fmove,
-  glob: "**/!(_*)",
-  fout: fmove,
-  transforms: transforms
-});
-
-// Create tasks
-configs.forEach(page => {
-  if (process.env.BUILD_PAGE && process.env.BUILD_PAGE !== page.name) {
-    return;
+    source
+      .pipe(pug({ locals: pug_data }))
+      .pipe(remove_trailing_dir(2))  // src/project/pug/*.pug ⟶ dest/*.html
+      .pipe(dest(paths.dst).on("end", () => {
+        if (configs[idx + 1] === undefined) done();
+        else render(++idx);
+      }));
   }
 
-  // Pug
-  if (fs.existsSync(path.join(page.full_path, "pug")))
-    tasks.push(create_pug_task(page));
+  render();
+}
 
-  // SCSS
-  if (fs.existsSync(path.join(page.full_path, "scss")))
-    tasks.push(create_scss_task(page));
+// Transform .scss to .css
+function scss_to_css() {
+  const global_scss_file = path.join(paths.src, "_globals.scss");
+  const scss = require("gulp-sass");
+  scss.compiler = require("node-sass");
 
-  // JS
-  if (fs.existsSync(path.join(page.full_path, "js")))
-    tasks.push(create_move_task(page, "js"));
-
-  // Images
-  if (fs.existsSync(path.join(page.full_path, "img")))
-    tasks.push(create_move_task(page, "img"));
-});
-
-// CNAME
-if (!process.env.BUILD_PAGE) {
-  tasks.push(
-    () => src(path.join(paths.src, "CNAME")).pipe(dest(paths.dst, "CNAME")),
-    () => src(path.join(paths.src, "favicon.png")).pipe(dest(paths.dst, "favicon.png"))
+  fs.writeFileSync(global_scss_file,
+    `$domain: "https://${domain.env_aware.apex}";`
   );
+
+  return src(`${paths.src}/**/scss/**/!(_*)`, { dot: true })
+    .pipe(scss({ includePaths: paths.src }).on("error", scss.logError))
+    .pipe(rename_trailing_dir_to("css"))
+    .pipe(prepend_relative_dir("static"))
+    .pipe(dest(paths.dst).on("end", () => fs.unlinkSync(global_scss_file)));
+}
+
+// Move js/ directories
+function move_js() {
+  return src(`${paths.src}/**/js/**/!(_*)`, { dot: true })
+    .pipe(prepend_relative_dir("static"))
+    .pipe(dest(paths.dst));
+}
+
+// Move img/ directories
+function move_img() {
+  const glob = [
+    `${paths.src}/**/img/**/!(_*)`,
+    `!${paths.src}/**/{assets,assets/**}`
+  ];
+
+  return src(glob, { dot: true })
+    .pipe(prepend_relative_dir("static"))
+    .pipe(dest(paths.dst));
+}
+
+// Move root files (favicon)
+function move_root_files() {
+  const root_files = fs
+    .readdirSync(paths.src, { withFileTypes: true })
+    .filter(dirent => dirent.isFile() && dirent.name[0] !== "." && dirent.name[0] !== "_")
+    .map(file => file.name);
+
+  return src(`${paths.src}/${root_files.length > 1 ? `{${root_files.join(",")}}` : root_files[0]}`)
+    .pipe(dest(paths.static));
 }
 
 // Exports
-exports.build = parallel(tasks.length ? tasks : noop => noop());
+exports.build = parallel(move_root_files, pug_to_html, scss_to_css, move_img, move_js);

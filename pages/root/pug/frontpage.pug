@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title pr.link
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+    link(href="static/favicon.png" rel="icon" type="image/png")
+    link(href="static/root/css/frontpage.css" type="text/css" rel="stylesheet")
+  body
+    header
+      div.rgb-container
+        div.r
+        div.g
+        div.b
+      div
+        h1
+          | #[b Morning, this is Patrick.]
+          | Meticulous. Lost in thoughts.
+          | Ever-changing &amp; imperfect.
+      nav
+        ol.nav
+          li
+            a.github(href="https://github.com/ptrckr") GitHub
+          li
+            a.steam(href="https://steamcommunity.com/id/ptrckr/") Steam
+    main
+      ol.projects
+        each project in projects
+          li.project-wrapper
+            a.project(href= (project.extern_url ? project.extern_url : `${project.basename}`) data-basename= project.basename)
+              div.project-preview(class="project-preview" style= `background: ${project.preview_background_color}`)
+                if project.preview_type === "image"
+                  img(src= `/static/${project.basename}/${project.preview}`)
+                else if project.preview_type === "video"
+                  video(src= `/static/${project.basename}/${project.preview}` playsinline autoplay loop)
+              div.project-data
+                h3.project-title= project.name
+                p.project-description= project.description
+                ol.project-meta
+                  li.project-meta-date= project.created
+                  each keyword in project.keywords
+                    li.project-meta-keyword= keyword
+    script(src="static/root/js/header.js")

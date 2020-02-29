@@ -1,0 +1,36 @@
+@import "globals.scss";
+@import "node_modules/fonts.pr.link/inter/_style.scss";
+@import "_reset.scss";
+@import "_themes.scss";
+
+
+html {
+  font-size: 15px;
+  font-family: InterWeb;
+}
+
+body {
+  @include theme((
+    "background": "background",
+    "color": "foreground"
+  ));
+}
+
+
+// Defaults
+
+$content-width: 800px;
+$icon-size: 30px;
+$body-padding: $icon-size * 2;
+
+
+// Input
+
+#stdin {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+@import "_interface.scss";
+@import "_articles.scss";

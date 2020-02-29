@@ -1,35 +1,59 @@
 $colors: (
 
   "light": (
-    "area": white,
-    "area-light": hsl(0, 0%, 90%),
-    "font": black,
-    "font-light": hsl(0, 0%, 90%),
-    "font-dimmed": hsl(0, 0%, 85%)
+    "background-error": hsl(0, 100%, 59%),
+    "background": white,
+    "background-light": hsl(0, 0%, 90%),
+
+    "foreground-error": hsl(0, 100%, 98%),
+    "foreground-dimmed": hsl(0, 0%, 97%),
+    "foreground-light": hsl(0, 0%, 90%),
+    "foreground": black,
+
+    "background-reverse": black,
+    "foreground-reverse": white
   ),
 
   "dark": (
-    "area": black,
-    "area-light": hsl(0, 0%, 15%),
-    "font": white,
-    "font-light": hsl(0, 0%, 50%),
-    "font-dimmed": hsl(0, 0%, 18%)
+    "background-error": hsl(0, 76%, 57%),
+    "background": black,
+    "background-light": hsl(0, 0%, 15%),
+
+    "foreground-error": hsl(0, 100%, 94%),
+    "foreground-dimmed": hsl(0, 0%, 5%),
+    "foreground-light": hsl(0, 0%, 50%),
+    "foreground": white,
+
+    "background-reverse": white,
+    "foreground-reverse": black
   ),
 
   "sepia": (
-    "area": hsl(56, 40%, 84%),
-    "area-light": hsl(53, 30%, 79%),
-    "font": hsl(56, 40%, 10%),
-    "font-light": hsl(33, 25%, 50%),
-    "font-dimmed": hsl(53, 32%, 76%)
+    "background-error": hsl(0, 100%, 68%),
+    "background": hsl(56, 40%, 84%),
+    "background-light": hsl(53, 30%, 79%),
+
+    "foreground-error": hsl(0, 100%, 97%),
+    "foreground-dimmed": hsl(54, 37%, 82%),
+    "foreground-light": hsl(33, 10%, 66%),
+    "foreground": hsl(56, 40%, 10%),
+
+    "background-reverse": hsl(56, 40%, 10%),
+    "foreground-reverse": hsl(56, 40%, 84%)
   ),
 
   "gb": (
-    "area": hsl(67, 33%, 56%),
-    "area-light": hsl(67, 27%, 51%),
-    "font": hsl(197, 20%, 18%),
-    "font-light": hsl(117, 13%, 28%),
-    "font-dimmed": hsl(67, 24%, 51%)
+    "background-error": hsl(0, 49%, 31%),
+    "background": hsl(67, 33%, 56%),
+    "background-light": hsl(67, 27%, 51%),
+
+    "foreground-error": hsl(0, 36%, 83%),
+    "foreground-dimmed": hsl(67, 30%, 55%),
+    "foreground-light": hsl(117, 13%, 28%),
+    "foreground": hsl(197, 20%, 18%),
+
+    "background-reverse": hsl(197, 20%, 18%),
+    "foreground-reverse": hsl(67, 33%, 56%)
   )
 
 );
