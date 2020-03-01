@@ -219,7 +219,8 @@ module.exports = exports = {
         {
           id: 39,
           name: "Cauldron Bubbles",
-          price: 50
+          collected: true,
+          item_id: 1200844544
         }
       ]
     },
