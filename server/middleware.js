@@ -9,10 +9,14 @@ module.exports = (app) => {
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
   app.use(helmet());
   app.use((req, res, next) => {
-    if (req.headers.host.substr(0, 4) === "www.")
-      return res.redirect(301, `https://${domain.env_aware.apex}`);
+    if (req.headers.host.substr(0, 4) !== "www.")
+      return void next();
+
+    let apex_host = req.headers.host.substr(4);
+    if (domain.env_aware.whitelisted.includes(apex_host))
+      res.redirect(301, `https://${apex_host}${req.path === "/" ? "" : req.path}`);
     else
-      return next();
+      res.status(404).end();
   });
   app.use(cors);
   app.use(cookie_session({
