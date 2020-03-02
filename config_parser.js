@@ -58,7 +58,6 @@ parser._default_config = Object.freeze({
 
   // Express
   route: false,
-  whitelist_domain: false,
   vhost: false,
 
   // Data

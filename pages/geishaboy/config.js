@@ -7,7 +7,6 @@ module.exports = {
 
   display_on_frontpage: true,
 
-  whitelist_domain: "geishaboy.tf",
   vhost: "geishaboy.tf",
 
   pug_data: {

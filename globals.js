@@ -25,14 +25,9 @@ const domain = {
 };
 
 domain.env_aware.whitelisted = [domain.env_aware.apex, domain.env_aware.www];
-configs.forEach(page => {
-  if (page.whitelist_domain) {
-    domain.env_aware.whitelisted.push(make_domain(page.whitelist_domain));
-  }
-
-  if (page.vhost) {
+configs.forEach((page) => {
+  if (page.vhost)
     domain.env_aware.whitelisted.push(make_domain(page.vhost));
-  }
 });
 
 module.exports = {
