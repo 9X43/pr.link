@@ -8,7 +8,7 @@ const fontstack = require("fonts.pr.link");
 module.exports = (app) => {
   // Page specific routes
   configs.forEach((page) => {
-    if (page.route)
+    if (page.has_routes)
       app.use("/", page.route(express.Router()));
 
     if (page.vhost)
