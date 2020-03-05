@@ -1,4 +1,4 @@
-const { is_live } = require("../globals.js");
+const { is_live } = require("../global/utils.js");
 const { Pool } = require("pg");
 
 const pool = new Pool({

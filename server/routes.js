@@ -1,5 +1,6 @@
 const path = require("path");
-const { env_aware_domain, domain, paths } = require("../globals.js");
+const domain = require("../global/domains.js");
+const paths = require("../global/paths.js");
 const configs = require("../configs.js");
 const express = require("express");
 const vhost = require("vhost");
@@ -12,8 +13,8 @@ module.exports = (app) => {
       app.use("/", page.route(express.Router()));
 
     if (page.vhost)
-      app.use(vhost(env_aware_domain(page.vhost, false), (req, res) => {
-        let url = `https://${domain.env_aware.apex}/${page.basename}`;
+      app.use(vhost(page.vhost, (req, res) => {
+        let url = `https://${domain.apex}/${page.basename}`;
 
         if (req.path !== "/")
           url += req.path;
@@ -28,7 +29,7 @@ module.exports = (app) => {
   });
 
   // Fonts
-  app.use("/fonts", fontstack(domain.env_aware.whitelisted));
+  app.use("/fonts", fontstack(domain.apex));
 
   // Static files
   app.use("/", express.static(paths.dst, {

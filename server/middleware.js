@@ -1,8 +1,8 @@
-const { domain } = require("../globals.js");
+const domain = require("../global/domains.js");
 const enforce = require("express-sslify");
 const helmet = require("helmet");
 const cookie_session = require("cookie-session");
-const cors = require("./cors.js")(domain.env_aware.whitelisted);
+const cors = require("./cors.js")(domain.apex);
 
 module.exports = (app) => {
   app.set("trust proxy", 1);
@@ -13,7 +13,7 @@ module.exports = (app) => {
       return void next();
 
     let apex_host = req.headers.host.substr(4);
-    if (domain.env_aware.whitelisted.includes(apex_host))
+    if (domain.whitelist.includes(apex_host))
       res.redirect(301, `https://${apex_host}${req.path === "/" ? "" : req.path}`);
     else
       res.status(404).end();

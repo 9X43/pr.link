@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const paths = require("./global/paths.js");
+const { env_aware_domain } = require("./global/utils.js");
 
 const default_config = {
   // Path
@@ -50,6 +51,7 @@ function build_config(config_path) {
   config.basename = path.basename(config.full_path);
   config.preview_type = /\.mp4$/.test(config.preview) ? "video" : "image";
   config.has_routes = !!config.route.length;
+  if (config.vhost) config.vhost = env_aware_domain(config.vhost, false);
 
   return config;
 }

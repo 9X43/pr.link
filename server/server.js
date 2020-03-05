@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
-const { is_live, paths } = require("../globals.js");
+const { is_live } = require("../global/utils.js");
+const paths = require("../global/paths.js");
 const http = require("http");
 const https = require("https");
 const ports = {

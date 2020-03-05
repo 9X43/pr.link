@@ -6,7 +6,9 @@ const fs = require("fs");
 const stream = require("stream");
 const { src, dest, parallel } = require("gulp");
 const configs = require("./configs.js");
-const { paths, domain } = require("./globals.js");
+const { is_live } = require("./global/utils.js");
+const paths = require("./global/paths.js");
+const domain = require("./global/domains.js");
 
 // Helper functions
 function prepend_relative_dir(dirname) {
@@ -74,7 +76,7 @@ function scss_to_css() {
   scss.compiler = require("node-sass");
 
   fs.writeFileSync(global_scss_file,
-    `$domain: "https://${domain.env_aware.apex}";`
+    `$domain: "https://${domain.apex}";`
   );
 
   return src(`${paths.src}/**/scss/**/!(_*)`, { dot: true })
