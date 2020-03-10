@@ -29,11 +29,9 @@ html
             span.effect-name=effect.name
             ul.effect-info
               if effect.collected
-                li.effect-status=effect.item_id
+                li.effect-status=`#${effect.item_id}`
               else if effect.price
                 li.effect-status=`Buying for ~${effect.price} Keys`
-              else if effect.unknown
-                li.effect-status="Inexistent"
               if effect.duped 
                 li.effect-duped="Duped"
 

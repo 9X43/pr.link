@@ -87,8 +87,8 @@ main {
   background-size: auto 100%;
 
   @at-root .geisha.missing #{&} {
-    filter: grayscale(.7);
-    opacity: .2;
+    filter: grayscale(1);
+    opacity: .4;
   }
 }
 
@@ -173,6 +173,7 @@ main {
 }
 
 .effect-name {
+  position: relative;
   font-family: TrashWeb;
   text-transform: uppercase;
   font-weight: bold;
@@ -181,10 +182,21 @@ main {
   color: hsl(30, 100%, 91%);
 
   @at-root .geisha.missing #{&} {
-    color: hsl(38, 8%, 38%);
-    text-decoration: line-through;
-    text-decoration-color: #f00;
-    text-decoration-style: wavy;
+    color: hsla(30, 100%, 91%, 0.35);
+
+    &::before {
+      content: "MISSING";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #ff2300;
+      transform: rotate(-5deg);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 
@@ -204,20 +216,7 @@ main {
     margin: 0 5px;
   }
 
-  .effect-status {
-    @at-root .geisha.missing #{&} {
-      background: none;
-      box-shadow: inset 0 0 0 1px hsl(30, 5%, 16%);
-    }
-
-    @at-root .geisha.collected #{&} {
-      &::before {
-        content: "#";
-      }
-    }
-  }
-
-  .effect-duped {
+  .effect-duped{
     background: hsl(13, 78%, 11%);
     color: hsl(11, 35%, 39%);
   }
