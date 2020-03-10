@@ -24,7 +24,7 @@ html
             ? `https://backpack.tf/item/${effect.item_id}`
             : "https://steamcommunity.com/id/ptrckr"
         a.geisha(href=href class=effect.collected ? "collected" : "missing")
-          img.effect-img(src=`/static/geishaboy/img/particles/${effect.id}.png`)
+          div.effect-img(class=`id${effect.id}`)
           div.effect-meta
             span.effect-name=effect.name
             ul.effect-info

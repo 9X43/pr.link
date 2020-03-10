@@ -82,13 +82,87 @@ main {
 }
 
 .effect-img {
-  width: 100%;
+  background-image: url(/static/geishaboy/img/particle_spritesheet.jpg);
+  padding-bottom: 100%;
+  background-size: auto 100%;
 
   @at-root .geisha.missing #{&} {
     filter: grayscale(.7);
     opacity: .2;
   }
 }
+
+// Particle spritesheet positions
+.id6 { background-position-x: calc(-100% * 0); }
+.id7 { background-position-x: calc(-100% * 1); }
+.id8 { background-position-x: calc(-100% * 2); }
+.id9 { background-position-x: calc(-100% * 3); }
+.id10 { background-position-x: calc(-100% * 4); }
+.id11 { background-position-x: calc(-100% * 5); }
+.id12 { background-position-x: calc(-100% * 6); }
+.id13 { background-position-x: calc(-100% * 7); }
+.id14 { background-position-x: calc(-100% * 8); }
+.id15 { background-position-x: calc(-100% * 9); }
+.id16 { background-position-x: calc(-100% * 10); }
+.id17 { background-position-x: calc(-100% * 11); }
+.id18 { background-position-x: calc(-100% * 12); }
+.id19 { background-position-x: calc(-100% * 13); }
+.id29 { background-position-x: calc(-100% * 14); }
+.id30 { background-position-x: calc(-100% * 15); }
+.id31 { background-position-x: calc(-100% * 16); }
+.id32 { background-position-x: calc(-100% * 17); }
+.id33 { background-position-x: calc(-100% * 18); }
+.id34 { background-position-x: calc(-100% * 19); }
+.id35 { background-position-x: calc(-100% * 20); }
+.id36 { background-position-x: calc(-100% * 21); }
+.id37 { background-position-x: calc(-100% * 22); }
+.id38 { background-position-x: calc(-100% * 23); }
+.id39 { background-position-x: calc(-100% * 24); }
+.id40 { background-position-x: calc(-100% * 25); }
+.id43 { background-position-x: calc(-100% * 26); }
+.id44 { background-position-x: calc(-100% * 27); }
+.id45 { background-position-x: calc(-100% * 28); }
+.id46 { background-position-x: calc(-100% * 29); }
+.id47 { background-position-x: calc(-100% * 30); }
+.id56 { background-position-x: calc(-100% * 31); }
+.id57 { background-position-x: calc(-100% * 32); }
+.id58 { background-position-x: calc(-100% * 33); }
+.id59 { background-position-x: calc(-100% * 34); }
+.id60 { background-position-x: calc(-100% * 35); }
+.id61 { background-position-x: calc(-100% * 36); }
+.id62 { background-position-x: calc(-100% * 37); }
+.id63 { background-position-x: calc(-100% * 38); }
+.id64 { background-position-x: calc(-100% * 39); }
+.id65 { background-position-x: calc(-100% * 40); }
+.id66 { background-position-x: calc(-100% * 41); }
+.id67 { background-position-x: calc(-100% * 42); }
+.id68 { background-position-x: calc(-100% * 43); }
+.id69 { background-position-x: calc(-100% * 44); }
+.id70 { background-position-x: calc(-100% * 45); }
+.id71 { background-position-x: calc(-100% * 46); }
+.id72 { background-position-x: calc(-100% * 47); }
+.id73 { background-position-x: calc(-100% * 48); }
+.id74 { background-position-x: calc(-100% * 49); }
+.id75 { background-position-x: calc(-100% * 50); }
+.id76 { background-position-x: calc(-100% * 51); }
+.id77 { background-position-x: calc(-100% * 52); }
+.id78 { background-position-x: calc(-100% * 53); }
+.id79 { background-position-x: calc(-100% * 54); }
+.id80 { background-position-x: calc(-100% * 55); }
+.id81 { background-position-x: calc(-100% * 56); }
+.id82 { background-position-x: calc(-100% * 57); }
+.id83 { background-position-x: calc(-100% * 58); }
+.id84 { background-position-x: calc(-100% * 59); }
+.id85 { background-position-x: calc(-100% * 60); }
+.id86 { background-position-x: calc(-100% * 61); }
+.id87 { background-position-x: calc(-100% * 62); }
+.id88 { background-position-x: calc(-100% * 63); }
+.id89 { background-position-x: calc(-100% * 64); }
+.id90 { background-position-x: calc(-100% * 65); }
+.id107 { background-position-x: calc(-100% * 66); }
+.id108 { background-position-x: calc(-100% * 67); }
+.id109 { background-position-x: calc(-100% * 68); }
+.id110 { background-position-x: calc(-100% * 69); }
 
 .effect-meta {
   color: #fff;
