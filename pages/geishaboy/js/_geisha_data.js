@@ -1,5 +1,4 @@
 module.exports = exports = {
-  key_exchange: 1.41034377,
   series: [
     {
       name: "Gen I",

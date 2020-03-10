@@ -31,7 +31,7 @@ html
               if effect.collected
                 li.effect-status=effect.item_id
               else if effect.price
-                li.effect-status=`Buying for ~${Math.floor(effect.price * collection.key_exchange)}€`
+                li.effect-status=`Buying for ~${effect.price} Keys`
               else if effect.unknown
                 li.effect-status="Inexistent"
               if effect.duped 
