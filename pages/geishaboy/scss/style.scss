@@ -99,7 +99,7 @@ main {
     display: block;
 
     @media (max-width: 700px) {
-      font-size: 20px;
+      font-size: 2rem;
     }
   }
 
@@ -114,19 +114,20 @@ main {
       top: 0;
       left: 0;
       width: 100%;
-      padding: 0.5rem 0;
+      padding: 0.6rem 0;
       z-index: 43;
       font-size: 0.8rem;
       font-weight: bold;
       -webkit-backdrop-filter: blur(43px);
       backdrop-filter: blur(43px);
+      background: hsla(0, 0%, 0%, 0.43);
     }
 
     li {
       margin: 0 .8em;
 
       @media (max-width: 700px) {
-        margin: 0 .5em;
+        margin: 0 .6em;
         display: flex;
       }
 
