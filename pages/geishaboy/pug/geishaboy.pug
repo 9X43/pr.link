@@ -11,11 +11,21 @@ html
     link(href="/static/geishaboy/css/style.css" type="text/css" rel="stylesheet")  
   body
     header
-      a(
-        href="https://backpack.tf/classifieds?steamid=76561198060233163"
-        data-dir="rtl"
-        data-text="BUYING GEISHA BOYS  $$$  "
-      ).marquee.header
+
+    div.intro
+      a(href="https://backpack.tf/profiles/76561198060233163")
+        h1 Geisha Boy Collector
+      ul.progress
+        li.color-unique
+          span(data-quality="Unique" data-collected="24/1")
+        li.color-genuine
+          span(data-quality="Genuine" data-collected="8/1")
+        li.color-unusual
+          span(data-quality="Unusual" data-collected=`${collected.length}/${effects.length}`)
+        li.color-collectors
+          span(data-quality="Collector's" data-collected="1/1")
+        li.color-selfmade
+          span(data-quality="Self-Made" data-collected="0/1")
 
     main  
       each effect in effects

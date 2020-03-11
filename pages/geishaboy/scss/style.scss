@@ -1,6 +1,20 @@
 @import "node_modules/fonts.pr.link/_style.scss";
 @import "_reset.scss";
 
+$tf2_item_qualities: (
+  unique: #FFD700,
+  genuine: #4D7455,
+  unusual: #8650AC,
+  collectors: #AA0000,
+  selfmade: #70B04A
+);
+
+@each $quality, $color in $tf2_item_qualities {
+  .color-#{$quality} {
+    color: $color;
+  }
+}
+
 html {
   background: black;
   font-family: InterWeb;
@@ -13,6 +27,7 @@ header {
   background-size: cover;
   background-position: bottom;
   position: relative;
+  z-index: -9;
 }
 
 .marquee {
@@ -24,14 +39,6 @@ header {
   display: flex;
   justify-content: center;
   overflow-x: hidden;
-
-  &.header {
-    position: absolute;
-    bottom: 0;
-    color: hsl(30, 100%, 91%);
-    transform: translateY(50%);
-    z-index: 1;
-  }
 
   &.footer {
     color: hsl(29, 17%, 34%);
@@ -78,6 +85,75 @@ main {
     padding: 20px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 20px;
+  }
+}
+
+.intro {
+  h1 {
+    font-family: TrashWeb;
+    font-size: 70px;
+    color: hsl(30, 100%, 91%);
+    text-transform: uppercase;
+    margin-top: -.4em;
+    text-align: center;
+    display: block;
+
+    @media (max-width: 700px) {
+      font-size: 20px;
+    }
+  }
+
+  .progress {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    text-transform: uppercase;
+
+    @media (max-width: 700px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 0.5rem 0;
+      z-index: 43;
+      font-size: 0.8rem;
+      font-weight: bold;
+      backdrop-filter: blur(43px);
+    }
+
+    li {
+      margin: 0 .8em;
+
+      @media (max-width: 700px) {
+        margin: 0 .5em;
+        display: flex;
+      }
+
+      &::before {
+        font-family: "InterWeb";
+        content: "● ";
+      }
+
+      span {
+        &::before {
+          content: attr(data-quality);
+          font-family: "TrashWeb";
+          font-weight: bold;
+
+          @media (max-width: 700px) {
+            display: none;
+          }
+        }
+        &::after {
+          content: " : " attr(data-collected);
+
+          @media (max-width: 700px) {
+            content: " " attr(data-collected);
+            white-space: pre;
+          }
+        }
+      }
+    }
   }
 }
 
