@@ -118,6 +118,7 @@ main {
       z-index: 43;
       font-size: 0.8rem;
       font-weight: bold;
+      -webkit-backdrop-filter: blur(43px);
       backdrop-filter: blur(43px);
     }
 
