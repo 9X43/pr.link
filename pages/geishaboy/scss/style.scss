@@ -44,12 +44,20 @@ header {
     color: hsl(29, 17%, 34%);
     background: hsl(30, 100%, 91%);
     font-size: 30px;
+
+    @media (max-width: 700px) {
+      font-size: 1rem;
+    }
   }
 
   &.credit {
     background: hsl(264, 82%, 63%);
     color: hsl(0, 0%, 100%);
     font-size: 16px;
+
+    @media (max-width: 700px) {
+      font-size: .6rem;
+    }
   }
 
   ul {
@@ -65,12 +73,6 @@ header {
   }
 }
 
-@media (max-width: 700px) {
-  .marquee {
-    font-size: 30px;
-  }
-}
-
 main {
   position: relative;
   padding: 100px;
@@ -82,13 +84,20 @@ main {
 
 @media (max-width: 700px) {
   main {
-    padding: 20px;
+    padding: 50px 20px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 20px;
   }
 }
 
 .intro {
+  @media (max-width: 700px) {
+    a {
+      position: relative;
+      display: block;
+    }
+  }
+
   h1 {
     font-family: TrashWeb;
     font-size: 70px;
@@ -99,7 +108,20 @@ main {
     display: block;
 
     @media (max-width: 700px) {
-      font-size: 2rem;
+      font-size: 2.3rem;
+      margin-top: 0;
+
+      .top {
+        position: absolute;
+        bottom: -0.25em;
+        left: 0;
+      }
+
+      .bottom {
+        position: absolute;
+        top: -0.05em;
+        right: 0;
+      }
     }
   }
 
