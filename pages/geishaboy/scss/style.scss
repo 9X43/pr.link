@@ -28,6 +28,10 @@ header {
   background-position: bottom;
   position: relative;
   z-index: -9;
+
+  @media (max-width: 700px) {
+    background-image: url(/static/geishaboy/img/header4.jpg);
+  }
 }
 
 .marquee {
@@ -84,17 +88,19 @@ main {
 
 @media (max-width: 700px) {
   main {
-    padding: 50px 20px;
+    padding: 40px 20px 50px 20px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 20px;
   }
 }
 
 .intro {
-  @media (max-width: 700px) {
-    a {
-      position: relative;
-      display: block;
+  a {
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 700px) {
+      flex-direction: column-reverse;
     }
   }
 
@@ -108,20 +114,10 @@ main {
     display: block;
 
     @media (max-width: 700px) {
-      font-size: 2.3rem;
-      margin-top: 0;
-
-      .top {
-        position: absolute;
-        bottom: -0.25em;
-        left: 0;
-      }
-
-      .bottom {
-        position: absolute;
-        top: -0.05em;
-        right: 0;
-      }
+      font-size: 2.5rem;
+      margin-top: -1rem;
+      margin-bottom: 0.5rem;
+      text-transform: none;
     }
   }
 
@@ -131,31 +127,30 @@ main {
     list-style: none;
     text-transform: uppercase;
 
-    @media (max-width: 700px) {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 0.6rem 0;
-      z-index: 43;
-      font-size: 0.8rem;
-      font-weight: bold;
-      -webkit-backdrop-filter: blur(43px);
-      backdrop-filter: blur(43px);
-      background: hsla(0, 0%, 0%, 0.43);
-    }
-
     li {
       margin: 0 .8em;
 
       @media (max-width: 700px) {
         margin: 0 .6em;
         display: flex;
+
+        &:not(.color-unusual) {
+          display: none;
+        }
+
+        &.color-unusual {
+          background: #8650AC;
+          border-radius: 5px;
+          color: #e2b8ff;
+          font-size: .8em;
+          padding: 4px 8px;
+        }
       }
 
       &::before {
         font-family: "InterWeb";
         content: "● ";
+        white-space: pre;
       }
 
       span {
@@ -163,10 +158,6 @@ main {
           content: attr(data-quality);
           font-family: "TrashWeb";
           font-weight: bold;
-
-          @media (max-width: 700px) {
-            display: none;
-          }
         }
         &::after {
           content: " : " attr(data-collected);
