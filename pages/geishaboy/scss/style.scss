@@ -30,7 +30,9 @@ header {
   z-index: -9;
 
   @media (max-width: 700px) {
-    background-image: url(/static/geishaboy/img/header4.jpg);
+    background: linear-gradient(10deg, #000 0, #0000 60px), linear-gradient(-10deg, #000 0, #0000 60px), url(/static/geishaboy/img/header_mobile.jpg);
+    background-position: center;
+    background-size: cover;
   }
 }
 
@@ -88,7 +90,7 @@ main {
 
 @media (max-width: 700px) {
   main {
-    padding: 40px 20px 50px 20px;
+    padding: 20px 20px 50px 20px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 20px;
   }
@@ -100,7 +102,8 @@ main {
     flex-direction: column;
 
     @media (max-width: 700px) {
-      flex-direction: column-reverse;
+      margin-top: -1.2rem;
+      position: relative;
     }
   }
 
@@ -114,9 +117,8 @@ main {
     display: block;
 
     @media (max-width: 700px) {
-      font-size: 2.5rem;
-      margin-top: -1rem;
-      margin-bottom: 0.5rem;
+      font-size: 2.4rem;
+      margin-top: 0;
       text-transform: none;
     }
   }
@@ -126,6 +128,12 @@ main {
     justify-content: center;
     list-style: none;
     text-transform: uppercase;
+
+    @media (max-width: 700px) {
+      position: absolute;
+      top: -38px;
+      width: 100%;
+    }
 
     li {
       margin: 0 .8em;
@@ -143,7 +151,10 @@ main {
           border-radius: 5px;
           color: #e2b8ff;
           font-size: .8em;
-          padding: 4px 8px;
+          padding: 0 8px;
+          height: 25px;
+          display: flex;
+          align-items: center;
         }
       }
 
