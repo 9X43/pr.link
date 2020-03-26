@@ -64,8 +64,10 @@ marquee.id = (function*() {
   }
 }());
 
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    Array.from(document.querySelectorAll(".marquee")).forEach(marquee);
-  }, 100);
-});
+if (document.body.clientWidth > 700) {
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      Array.from(document.querySelectorAll(".marquee")).forEach(marquee);
+    }, 100);
+  });
+}
