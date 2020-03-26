@@ -247,12 +247,12 @@ module.exports = exports = {
         {
           id: 47,
           name: "Stormy 13th Hour",
-          price: 265,
+          price: 210,
         },
         {
           id: 44,
           name: "Misty Skull",
-          price: 90
+          price: 100
         }
       ]
     },
@@ -339,7 +339,7 @@ module.exports = exports = {
         {
           id: 86,
           name: "Haunted Phantasm Jr",
-          price: 95,
+          price: 100,
           unknown: true
         },
         {

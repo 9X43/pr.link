@@ -15,6 +15,20 @@ $tf2_item_qualities: (
   }
 }
 
+$mobile_breakpoint: 700px;
+
+@mixin only_mobile {
+  @media(max-width: $mobile_breakpoint) {
+    @content;
+  }
+}
+
+@mixin only_desktop {
+  @media(min-width: $mobile_breakpoint) {
+    @content;
+  }
+}
+
 html {
   background: black;
   font-family: InterWeb;
@@ -329,5 +343,78 @@ main {
   .effect-duped {
     background: hsl(13, 78%, 11%);
     color: hsl(11, 35%, 39%);
+  }
+}
+
+@include only_mobile {
+  footer:not(.mobile) {
+    display: none;
+  }
+}
+
+footer.mobile {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 1.5rem;
+  padding: 0 2rem;
+  padding-bottom: 300px;
+  background: url(/static/geishaboy/img/footer_mobile.jpg);
+  background-position: center bottom;
+  background-repeat: no-repeat;
+
+  p {
+    color: #fff;
+    text-align: center;
+    font-family: "ColfaxWeb";
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+
+    a {
+      height: 50px;
+      background: hsl(0, 0%, 20%);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "ColfaxWeb";
+      font-weight: bold;
+      border-radius: 10px;
+      font-size: 0.9rem;
+
+      &:first-child {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        background: #8650AC;
+      }
+    }
+  }
+
+  .thanksto {
+    color: hsl(0, 0%, 40%);
+    font-weight: bold;
+    text-align: center;
+    font-family: "ColfaxWeb";
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      height: 1.1em;
+      margin-right: 0.5em;
+    }
+  }
+}
+
+@include only_desktop {
+  footer.mobile {
+    display: none;
   }
 }
