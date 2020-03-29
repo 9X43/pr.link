@@ -1,6 +1,7 @@
 @import "node_modules/fonts.pr.link/_style.scss";
 @import "_reset.scss";
 
+// TF2 Item Quality Colors
 $tf2_item_qualities: (
   unique: #FFD700,
   genuine: #4D7455,
@@ -15,6 +16,20 @@ $tf2_item_qualities: (
   }
 }
 
+// Colors
+$text-color: hsl(30, 100%, 91%);
+$attention-color: hsl(8, 100%, 50%);
+$text-gray: hsl(38, 8%, 38%);
+$background-gray: hsl(30, 4%, 11%);
+$text-red: hsl(10, 35%, 39%);
+$background-red: hsl(14, 79%, 11%);
+
+// Text Styles
+.regular {
+  font-weight: normal;
+}
+
+// Media Queries
 $mobile_breakpoint: 700px;
 
 @mixin only_mobile {
@@ -29,173 +44,112 @@ $mobile_breakpoint: 700px;
   }
 }
 
+// Font Sizes
+$fontsize-base: 12px;
+$fontsize-content: 1.125rem;
+$fontsize-subhead: 2.281rem;
+$fontsize-head: 5.202rem;
+
+// Html
 html {
   background: black;
+  font-size: $fontsize-base;
   font-family: InterWeb;
+  line-height: 1;
 }
 
+// Header
 header {
-  width: 100%;
-  height: 50%;
-  background: linear-gradient(5deg, #000 0, #0000 160px), linear-gradient(-5deg, #000 0, #0000 160px), url(/static/geishaboy/img/background.jpg);
-  background-size: cover;
-  background-position: bottom;
-  position: relative;
-  z-index: -9;
-  box-shadow: inset 0 -1px 0 0px black;
-
-  @media (max-width: 700px) {
-    background: linear-gradient(10deg, #000 0, #0000 60px), linear-gradient(-10deg, #000 0, #0000 60px), url(/static/geishaboy/img/header_mobile.jpg);
-    background-position: center;
-    background-size: cover;
-  }
-}
-
-.marquee {
-  font-family: TrashWeb;
-  font-size: 60px;
-  font-weight: bold;
-  line-height: 1.5;
-  width: 100%;
   display: flex;
-  justify-content: center;
-  overflow-x: hidden;
+  flex-direction: column;
+  align-items: center;
 
-  &.footer {
-    color: hsl(29, 17%, 34%);
-    background: hsl(30, 100%, 91%);
-    font-size: 30px;
+  .background {
+    width: 100%;
+    height: 40vh;
+    background: url(/static/geishaboy/img/header3.jpg);
+    background-size: cover;
+    background-position: center;
 
-    @media (max-width: 700px) {
-      font-size: 1rem;
-    }
-  }
-
-  &.credit {
-    background: hsl(264, 82%, 63%);
-    color: hsl(0, 0%, 100%);
-    font-size: 16px;
-
-    @media (max-width: 700px) {
-      font-size: .6rem;
-    }
-  }
-
-  ul {
-    position: relative;
-    white-space: nowrap;
-
-    li {
-      display: inline-block;
-      white-space: pre;
-      /* Vertically center uppercase text */
-      margin-top: 0.2em;
+    @include only_mobile {
+      background: url(/static/geishaboy/img/footer_mobile.jpg);
+      background-size: cover;
+      background-position: center;
     }
   }
 }
 
+h1 {
+  font-family: TrashWeb;
+  font-size: $fontsize-head;
+  color: $text-color;
+  text-align: center;
+  margin-top: -.5em;
+  line-height: 1.05;
+
+  @include only_desktop {
+    width: 85rem;
+  }
+
+  @include only_mobile {
+    font-size: 2.281rem;
+    padding: 0 1em;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.progress {
+  text-transform: uppercase;
+  font-size: $fontsize-subhead;
+  text-align: center;
+  line-height: 1.6;
+  margin-top: 2rem;
+
+  @include only_desktop {
+    width: 85rem;
+  }
+
+  @include only_mobile {
+    display: none;
+  }
+
+  li {
+    margin: 0 1em;
+    display: inline-block;
+
+    &::before {
+      content: "● ";
+      font-family: "InterWeb";
+    }
+
+    span {
+      &::before {
+        content: attr(data-quality);
+        font-family: "TrashWeb";
+        font-weight: bold;
+      }
+      &::after {
+        content: " : " attr(data-collected);
+      }
+    }
+  }
+}
+
+// Collection
 main {
-  position: relative;
   padding: 100px;
   display: grid;
   grid-template-columns: repeat(auto-fill, 160px);
   grid-gap: 50px 20px;
   justify-content: center;
-}
 
-@media (max-width: 700px) {
-  main {
-    padding: 20px 20px 50px 20px;
+  @include only_mobile {
+    padding: 30px 20px 50px 20px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 20px;
-  }
-}
-
-.intro {
-  a {
-    display: flex;
-    flex-direction: column;
-
-    @media (max-width: 700px) {
-      margin-top: -1.2rem;
-      position: relative;
-    }
-  }
-
-  h1 {
-    font-family: TrashWeb;
-    font-size: 70px;
-    color: hsl(30, 100%, 91%);
-    text-transform: uppercase;
-    margin-top: -.4em;
-    margin-bottom: 0.1em;
-    text-align: center;
-    display: block;
-
-    @media (max-width: 700px) {
-      font-size: 2.4rem;
-      margin: 0;
-      text-transform: none;
-    }
-  }
-
-  .progress {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    text-transform: uppercase;
-
-    @media (max-width: 700px) {
-      position: absolute;
-      top: -38px;
-      width: 100%;
-    }
-
-    li {
-      margin: 0 .8em;
-
-      @media (max-width: 700px) {
-        margin: 0 .6em;
-        display: flex;
-
-        &:not(.color-unusual) {
-          display: none;
-        }
-
-        &.color-unusual {
-          background: #8650AC;
-          border-radius: 5px;
-          color: #e2b8ff;
-          font-size: .8em;
-          padding: 0 8px;
-          height: 25px;
-          display: flex;
-          align-items: center;
-        }
-      }
-
-      &::before {
-        font-family: "InterWeb";
-        content: "● ";
-        white-space: pre;
-      }
-
-      span {
-        &::before {
-          content: attr(data-quality);
-          font-family: "TrashWeb";
-          font-weight: bold;
-        }
-        &::after {
-          content: " : " attr(data-collected);
-
-          @media (max-width: 700px) {
-            content: " " attr(data-collected);
-            white-space: pre;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -210,104 +164,48 @@ main {
   }
 }
 
-// Particle spritesheet positions
-.id6 { background-position-x: calc(-100% * 0); }
-.id7 { background-position-x: calc(-100% * 1); }
-.id8 { background-position-x: calc(-100% * 2); }
-.id9 { background-position-x: calc(-100% * 3); }
-.id10 { background-position-x: calc(-100% * 4); }
-.id11 { background-position-x: calc(-100% * 5); }
-.id12 { background-position-x: calc(-100% * 6); }
-.id13 { background-position-x: calc(-100% * 7); }
-.id14 { background-position-x: calc(-100% * 8); }
-.id15 { background-position-x: calc(-100% * 9); }
-.id16 { background-position-x: calc(-100% * 10); }
-.id17 { background-position-x: calc(-100% * 11); }
-.id18 { background-position-x: calc(-100% * 12); }
-.id19 { background-position-x: calc(-100% * 13); }
-.id29 { background-position-x: calc(-100% * 14); }
-.id30 { background-position-x: calc(-100% * 15); }
-.id31 { background-position-x: calc(-100% * 16); }
-.id32 { background-position-x: calc(-100% * 17); }
-.id33 { background-position-x: calc(-100% * 18); }
-.id34 { background-position-x: calc(-100% * 19); }
-.id35 { background-position-x: calc(-100% * 20); }
-.id36 { background-position-x: calc(-100% * 21); }
-.id37 { background-position-x: calc(-100% * 22); }
-.id38 { background-position-x: calc(-100% * 23); }
-.id39 { background-position-x: calc(-100% * 24); }
-.id40 { background-position-x: calc(-100% * 25); }
-.id43 { background-position-x: calc(-100% * 26); }
-.id44 { background-position-x: calc(-100% * 27); }
-.id45 { background-position-x: calc(-100% * 28); }
-.id46 { background-position-x: calc(-100% * 29); }
-.id47 { background-position-x: calc(-100% * 30); }
-.id56 { background-position-x: calc(-100% * 31); }
-.id57 { background-position-x: calc(-100% * 32); }
-.id58 { background-position-x: calc(-100% * 33); }
-.id59 { background-position-x: calc(-100% * 34); }
-.id60 { background-position-x: calc(-100% * 35); }
-.id61 { background-position-x: calc(-100% * 36); }
-.id62 { background-position-x: calc(-100% * 37); }
-.id63 { background-position-x: calc(-100% * 38); }
-.id64 { background-position-x: calc(-100% * 39); }
-.id65 { background-position-x: calc(-100% * 40); }
-.id66 { background-position-x: calc(-100% * 41); }
-.id67 { background-position-x: calc(-100% * 42); }
-.id68 { background-position-x: calc(-100% * 43); }
-.id69 { background-position-x: calc(-100% * 44); }
-.id70 { background-position-x: calc(-100% * 45); }
-.id71 { background-position-x: calc(-100% * 46); }
-.id72 { background-position-x: calc(-100% * 47); }
-.id73 { background-position-x: calc(-100% * 48); }
-.id74 { background-position-x: calc(-100% * 49); }
-.id75 { background-position-x: calc(-100% * 50); }
-.id76 { background-position-x: calc(-100% * 51); }
-.id77 { background-position-x: calc(-100% * 52); }
-.id78 { background-position-x: calc(-100% * 53); }
-.id79 { background-position-x: calc(-100% * 54); }
-.id80 { background-position-x: calc(-100% * 55); }
-.id81 { background-position-x: calc(-100% * 56); }
-.id82 { background-position-x: calc(-100% * 57); }
-.id83 { background-position-x: calc(-100% * 58); }
-.id84 { background-position-x: calc(-100% * 59); }
-.id85 { background-position-x: calc(-100% * 60); }
-.id86 { background-position-x: calc(-100% * 61); }
-.id87 { background-position-x: calc(-100% * 62); }
-.id88 { background-position-x: calc(-100% * 63); }
-.id89 { background-position-x: calc(-100% * 64); }
-.id90 { background-position-x: calc(-100% * 65); }
-.id107 { background-position-x: calc(-100% * 66); }
-.id108 { background-position-x: calc(-100% * 67); }
-.id109 { background-position-x: calc(-100% * 68); }
-.id110 { background-position-x: calc(-100% * 69); }
+// Particle Spritesheet Positions
+$spritex: (  6,  0), (  7,  1), (  8,  2), (  9,  3), ( 10,  4), ( 11,  5), ( 12,  6),
+          ( 13,  7), ( 14,  8), ( 15,  9), ( 16, 10), ( 17, 11), ( 18, 12), ( 19, 13),
+          ( 29, 14), ( 30, 15), ( 31, 16), ( 32, 17), ( 33, 18), ( 34, 19), ( 35, 20),
+          ( 36, 21), ( 37, 22), ( 38, 23), ( 39, 24), ( 40, 25), ( 43, 26), ( 44, 27),
+          ( 45, 28), ( 46, 29), ( 47, 30), ( 56, 31), ( 57, 32), ( 58, 33), ( 59, 34),
+          ( 60, 35), ( 61, 36), ( 62, 37), ( 63, 38), ( 64, 39), ( 65, 40), ( 66, 41),
+          ( 67, 42), ( 68, 43), ( 69, 44), ( 70, 45), ( 71, 46), ( 72, 47), ( 73, 48),
+          ( 74, 49), ( 75, 50), ( 76, 51), ( 77, 52), ( 78, 53), ( 79, 54), ( 80, 55),
+          ( 81, 56), ( 82, 57), ( 83, 58), ( 84, 59), ( 85, 60), ( 86, 61), ( 87, 62),
+          ( 88, 63), ( 89, 64), ( 90, 65), (107, 66), (108, 67), (109, 68), (110, 69);
+
+@each $id, $idx in $spritex {
+  .id#{$id} {
+    background-position-x: calc(-100% * #{$idx});
+  }
+}
 
 .effect-meta {
-  color: #fff;
   text-align: center;
   white-space: pre-wrap;
   padding-top: 1rem;
-  font-size: 14px;
 }
 
 .effect-name {
+  font-size: $fontsize-content;
   position: relative;
   font-family: TrashWeb;
   text-transform: uppercase;
   font-weight: bold;
-  line-height: 1;
   display: block;
-  color: hsl(30, 100%, 91%);
+  color: $text-color;
 
   @at-root .geisha.missing #{&} {
-    color: hsla(30, 100%, 91%, 0.35);
+    color: rgba($text-color, .35);
 
     &::before {
       content: "BUYING";
       position: absolute;
       left: 0;
       top: 0;
-      color: #ff2300;
+      color: $attention-color;
       transform: rotate(-5deg);
       width: 100%;
       height: 100%;
@@ -319,20 +217,17 @@ main {
 }
 
 .effect-info {
-  list-style: none;
-  margin-top: 6px;
+  margin-top: .6rem;
   display: flex;
   justify-content: center;
 
   li {
-    color: hsl(38, 8%, 38%);
-    background: hsl(30, 4%, 11%);
+    color: $text-gray;
+    background: $background-gray;
     letter-spacing: .02em;
-    font-size: 12px;
-    line-height: 1;
-    padding: 3px 6px;
+    padding: 0.35rem .7rem;
     border-radius: 3px;
-    margin: 0 5px;
+    margin: 0 .3rem;
   }
 
   .effect-status {
@@ -341,80 +236,41 @@ main {
   }
 
   .effect-duped {
-    background: hsl(13, 78%, 11%);
-    color: hsl(11, 35%, 39%);
+    background: $background-red;
+    color: $text-red;
   }
 }
 
-@include only_mobile {
-  footer:not(.mobile) {
-    display: none;
-  }
-}
+// Footer
+footer {
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  font-weight: bold;
+  font-size: 1.125rem;
 
-footer.mobile {
-  display: grid;
-  grid-template-rows: repeat(3, auto);
-  grid-gap: 1.5rem;
-  padding: 0 2rem;
-  padding-bottom: 300px;
-  background: url(/static/geishaboy/img/footer_mobile.jpg);
-  background-position: center bottom;
-  background-repeat: no-repeat;
-
-  p {
-    color: #fff;
-    text-align: center;
-    font-family: "ColfaxWeb";
-    font-weight: bold;
-    font-size: 1.3rem;
+  @include only_mobile {
+    flex-direction: column;
   }
 
-  .buttons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-gap: 10px;
-
-    a {
-      height: 50px;
-      background: hsl(0, 0%, 20%);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "ColfaxWeb";
-      font-weight: bold;
-      border-radius: 10px;
-      font-size: 0.9rem;
-
-      &:first-child {
-        grid-column-start: 1;
-        grid-column-end: 3;
-        background: #8650AC;
-      }
-    }
-  }
-
-  .thanksto {
-    color: hsl(0, 0%, 40%);
-    font-weight: bold;
-    text-align: center;
-    font-family: "ColfaxWeb";
-    font-size: 0.9rem;
+  a {
     display: flex;
-    justify-content: center;
     align-items: center;
 
-    img {
-      height: 1.1em;
-      margin-right: 0.5em;
+    @include only_desktop {
+      padding: 0 1.5em;
+    }
+
+    @include only_mobile {
+      padding: .3em 0;
     }
   }
-}
 
-@include only_desktop {
-  footer.mobile {
-    display: none;
+  img {
+    height: 1.2em;
+    margin-right: 0.6em;
+    position: relative;
   }
 }

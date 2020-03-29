@@ -11,21 +11,21 @@ html
     link(href="/static/geishaboy/css/style.css" type="text/css" rel="stylesheet")  
   body
     header
-
-    div.intro
-      a(href="https://backpack.tf/profiles/76561198060233163")
-        h1 Geisha Boy Collector
-        ul.progress
-          li.color-unique
-            span(data-quality="Unique" data-collected="24/1")
-          li.color-genuine
-            span(data-quality="Genuine" data-collected="8/1")
-          li.color-unusual
-            span(data-quality="Unusual" data-collected=`${collected.length}/${effects.length}`)
-          li.color-collectors
-            span(data-quality="Collector's" data-collected="1/1")
-          li.color-selfmade
-            span(data-quality="Self-Made" data-collected="0/1")
+      div.background
+      h1 I'm a Geisha Boy collector, 
+        span.regular buying missing Geishas above market value. 
+        span.regular Check my #[a(href="https://backpack.tf/classifieds?steamid=76561198060233163") Buy Orders] or add me on #[a(href="https://steamcommunity.com/id/ptrckr/") steam].
+      ul.progress
+        li.color-unique
+          span(data-quality="Unique" data-collected="24/1")
+        li.color-genuine
+          span(data-quality="Genuine" data-collected="8/1")
+        li.color-unusual
+          span(data-quality="Unusual" data-collected=`${collected.length}/${effects.length}`)
+        li.color-collectors
+          span(data-quality="Collector's" data-collected="1/1")
+        li.color-selfmade
+          span(data-quality="Self-Made" data-collected="0/1")
 
     main  
       each effect in effects
@@ -45,22 +45,10 @@ html
               if effect.duped 
                 li.effect-duped="Duped"
 
-    footer.mobile
-      p I'm buying rare Geishas above market price, feel free to add me to negotiate.
-      div.buttons
-        a(href="https://backpack.tf/classifieds?steamid=76561198060233163") Check Buy Orders
-        a(href="https://steamcommunity.com/id/ptrckr/") Steam
-        a(href="https://backpack.tf/profiles/76561198060233163") Backpack
-      a.thanksto(href="https://backpack.tf/developer/particles") #[img(src="/static/geishaboy/img/backpack_tf_logo.svg")] Powered by Backpack.TF
-
     footer
-      div(
-        data-dir="rtl"
-        data-text="FROG LEAPS INTO POND. LOTUS BLOSSOMS FALL TO EARTH. MEDIC HAS GIRL'S HAIR. "
-      ).marquee.footer
-      div(
-        data-dir="ltr"
-        data-text=`PARTICLE IMAGES BY BACKPACK.TF  ©  ${new Date(Date.now()).getFullYear()} PR.LINK  ©  `
-      ).marquee.credit
-
-    script(src="/static/geishaboy/js/marquee.js")
+      a(href="https://backpack.tf/developer/particles")
+        img(src="/static/geishaboy/img/backpack_tf_logo.svg")
+        | Particle Images by Backpack.TF
+      a(href="https://store.steampowered.com/app/440/Team_Fortress_2/")
+        img(src="/static/geishaboy/img/steam.svg")
+        | Team Fortress 2 by Valve

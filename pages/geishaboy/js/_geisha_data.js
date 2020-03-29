@@ -252,7 +252,7 @@ module.exports = exports = {
         {
           id: 44,
           name: "Misty Skull",
-          price: 100
+          price: 111
         }
       ]
     },
@@ -339,7 +339,7 @@ module.exports = exports = {
         {
           id: 86,
           name: "Haunted Phantasm Jr",
-          price: 100,
+          price: 120,
           unknown: true
         },
         {
@@ -356,19 +356,19 @@ module.exports = exports = {
         {
           id: 109,
           name: "Starstorm Insomnia",
-          price: 30,
+          price: 40,
           unknown: true
         },
         {
           id: 110,
           name: "Starstorm Slumber",
-          price: 30,
+          price: 40,
           unknown: true
         },
         {
           id: 108,
           name: "Tesla Coil",
-          price: 30,
+          price: 40,
           unknown: true
         },
         {
@@ -391,7 +391,7 @@ module.exports = exports = {
         {
           id: 71,
           name: "Green Black Hole",
-          price: 100
+          price: 111
         },
         {
           id: 63,
@@ -438,7 +438,7 @@ module.exports = exports = {
         {
           id: 72,
           name: "Roboactive",
-          price: 100
+          price: 122
         }
       ]
     },
