@@ -15,17 +15,7 @@ html
       h1 I'm a Geisha Boy collector, 
         span.regular buying missing Geishas above market value. 
         span.regular Check my #[a(href="https://backpack.tf/classifieds?steamid=76561198060233163") Buy Orders] or add me on #[a(href="https://steamcommunity.com/id/ptrckr/") steam].
-      ul.progress
-        li.color-unique
-          span(data-quality="Unique" data-collected="24/1")
-        li.color-genuine
-          span(data-quality="Genuine" data-collected="8/1")
-        li.color-unusual
-          span(data-quality="Unusual" data-collected=`${collected.length}/${effects.length}`)
-        li.color-collectors
-          span(data-quality="Collector's" data-collected="1/1")
-        li.color-selfmade
-          span(data-quality="Self-Made" data-collected="0/1")
+      h2 The collection consists currently of #[span(class="color-unique") 24 Unique], #[span(class="color-genuine") 8 Genuine], #[span(class="color-unusual")= `${collected.length}/${effects.length} Unusual`], #[span(class="color-collectors") 1 Collector's] and #[span(class="color-selfmade") 0 Self-Made] Geishas.
 
     main  
       each effect in effects
@@ -46,9 +36,16 @@ html
                 li.effect-duped="Duped"
 
     footer
-      a(href="https://backpack.tf/developer/particles")
-        img(src="/static/geishaboy/img/backpack_tf_logo.svg")
-        | Particle Images by Backpack.TF
-      a(href="https://store.steampowered.com/app/440/Team_Fortress_2/")
-        img(src="/static/geishaboy/img/steam.svg")
-        | Team Fortress 2 by Valve
+      div.only_mobile.logos
+        a(href="https://backpack.tf/developer/particles")
+          img(src="/static/geishaboy/img/backpack_tf_logo.svg")
+        a(href="https://store.steampowered.com/app/440/Team_Fortress_2/")
+          img(src="/static/geishaboy/img/steam.svg")
+      div.full_list
+        a(href="https://backpack.tf/developer/particles")
+          img.only_desktop(src="/static/geishaboy/img/backpack_tf_logo.svg")
+          | Particle Images by Backpack.TF
+        a(href="https://store.steampowered.com/app/440/Team_Fortress_2/")
+          img.only_desktop(src="/static/geishaboy/img/steam.svg")
+          | Team Fortress 2 by Valve
+      span.only_mobile.regular=`© ${new Date().getFullYear()} LOLOLOL`

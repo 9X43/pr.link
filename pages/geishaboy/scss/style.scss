@@ -17,6 +17,7 @@ $tf2_item_qualities: (
 }
 
 // Colors
+$background-color: black;
 $text-color: hsl(30, 100%, 91%);
 $attention-color: hsl(8, 100%, 50%);
 $text-gray: hsl(38, 8%, 38%);
@@ -44,15 +45,28 @@ $mobile_breakpoint: 700px;
   }
 }
 
+.only_desktop {
+  @include only_mobile {
+    display: none;
+  }
+}
+
+.only_mobile {
+  @include only_desktop {
+    display: none;
+  }
+}
+
 // Font Sizes
 $fontsize-base: 12px;
 $fontsize-content: 1.125rem;
+$fontsize-subhead-mobile: 1.266rem;
 $fontsize-subhead: 2.281rem;
 $fontsize-head: 5.202rem;
 
 // Html
 html {
-  background: black;
+  background: $background-color;
   font-size: $fontsize-base;
   font-family: InterWeb;
   line-height: 1;
@@ -81,19 +95,20 @@ header {
 
 h1 {
   font-family: TrashWeb;
-  font-size: $fontsize-head;
   color: $text-color;
   text-align: center;
   margin-top: -.5em;
   line-height: 1.05;
+  text-shadow: 0 -0.1em 2rem $background-color;
 
   @include only_desktop {
+    font-size: $fontsize-head;
     width: 85rem;
   }
 
   @include only_mobile {
-    font-size: 2.281rem;
-    padding: 0 1em;
+    font-size: $fontsize-subhead;
+    padding: 0 2rem;
   }
 
   a {
@@ -101,39 +116,32 @@ h1 {
   }
 }
 
-.progress {
-  text-transform: uppercase;
-  font-size: $fontsize-subhead;
+h2 {
+  color: rgba($text-color, .5);
   text-align: center;
-  line-height: 1.6;
-  margin-top: 2rem;
+  font-weight: normal;
+  font-family: TrashWeb;
 
   @include only_desktop {
     width: 85rem;
+    font-size: $fontsize-subhead;
+    line-height: 1.6;
+    margin-top: 2rem;
   }
 
   @include only_mobile {
-    display: none;
+    font-size: $fontsize-subhead-mobile;
+    line-height: 1.3;
+    margin-top: 1em;
+    padding: 0 2rem;
   }
 
-  li {
-    margin: 0 1em;
-    display: inline-block;
+  span {
+    white-space: nowrap;
+    font-weight: bold;
 
-    &::before {
-      content: "● ";
-      font-family: "InterWeb";
-    }
-
-    span {
-      &::before {
-        content: attr(data-quality);
-        font-family: "TrashWeb";
-        font-weight: bold;
-      }
-      &::after {
-        content: " : " attr(data-collected);
-      }
+    @include only_desktop {
+      text-transform: uppercase;
     }
   }
 }
@@ -196,6 +204,10 @@ $spritex: (  6,  0), (  7,  1), (  8,  2), (  9,  3), ( 10,  4), ( 11,  5), ( 12
   font-weight: bold;
   display: block;
   color: $text-color;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1em 0;
+  margin: -1em 0;
 
   @at-root .geisha.missing #{&} {
     color: rgba($text-color, .35);
@@ -217,7 +229,7 @@ $spritex: (  6,  0), (  7,  1), (  8,  2), (  9,  3), ( 10,  4), ( 11,  5), ( 12
 }
 
 .effect-info {
-  margin-top: .6rem;
+  margin-top: .5rem;
   display: flex;
   justify-content: center;
 
@@ -244,20 +256,36 @@ $spritex: (  6,  0), (  7,  1), (  8,  2), (  9,  3), ( 10,  4), ( 11,  5), ( 12
 // Footer
 footer {
   padding-bottom: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: #666;
   font-weight: bold;
   font-size: 1.125rem;
 
+  @include only_desktop {
+    .full_list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   @include only_mobile {
-    flex-direction: column;
+    padding-top: 20px;
+    display: grid;
+    grid-gap: 0.8em;
+    text-align: center;
+  }
+
+  .logos {
+    a {
+      display: inline-flex;
+      padding: 0 .5em;
+    }
   }
 
   a {
     display: flex;
     align-items: center;
+    justify-content: center;
 
     @include only_desktop {
       padding: 0 1.5em;
@@ -270,7 +298,10 @@ footer {
 
   img {
     height: 1.2em;
-    margin-right: 0.6em;
     position: relative;
+
+    &.only_desktop {
+      margin-right: 0.6em;
+    }
   }
 }
