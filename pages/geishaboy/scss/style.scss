@@ -148,16 +148,25 @@ h2 {
 
 // Collection
 main {
-  padding: 100px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 160px);
-  grid-gap: 50px 20px;
-  justify-content: center;
+  @include only_desktop {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 100px;
+  }
 
   @include only_mobile {
-    padding: 30px 20px 50px 20px;
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 20px;
+    padding: 30px 20px 50px 20px;
+  }
+}
+
+@include only_desktop {
+  .geisha {
+    width: 160px;
+    margin: 25px 10px;
   }
 }
 
@@ -255,53 +264,60 @@ $spritex: (  6,  0), (  7,  1), (  8,  2), (  9,  3), ( 10,  4), ( 11,  5), ( 12
 
 // Footer
 footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-bottom: 50px;
-  color: #666;
+  color: $text-color;
   font-weight: bold;
   font-size: 1.125rem;
 
-  @include only_desktop {
-    .full_list {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  .geishaboy {
+    margin: 0 auto;
+    height: 50px;
+    display: block;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-sizing: content-box;
+  }
+
+  .stats {
+    margin-bottom: 20px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 10px;
+
+    li {
+      &::before {
+        content: "❤ ";
+      }
     }
   }
 
-  @include only_mobile {
-    padding-top: 20px;
-    display: grid;
-    grid-gap: 0.8em;
-    text-align: center;
-  }
+  span {
+    line-height: 1.6;
 
-  .logos {
-    a {
-      display: inline-flex;
-      padding: 0 .5em;
+    &:not(:first-of-type) {
+      font-weight: normal;
+      color: $text-gray;
     }
   }
 
   a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    @include only_desktop {
-      padding: 0 1.5em;
-    }
-
-    @include only_mobile {
-      padding: .3em 0;
-    }
-  }
-
-  img {
-    height: 1.2em;
     position: relative;
 
-    &.only_desktop {
-      margin-right: 0.6em;
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: currentcolor;
+      border-radius: 4px;
+      z-index: -1;
+      margin: -1px -3px;
+      opacity: .2;
+      height: 0.5em;
     }
   }
 }

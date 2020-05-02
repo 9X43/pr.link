@@ -36,16 +36,13 @@ html
                 li.effect-duped="Duped"
 
     footer
-      div.only_mobile.logos
-        a(href="https://backpack.tf/developer/particles")
-          img(src="/static/geishaboy/img/backpack_tf_logo.svg")
-        a(href="https://store.steampowered.com/app/440/Team_Fortress_2/")
-          img(src="/static/geishaboy/img/steam.svg")
-      div.full_list
-        a(href="https://backpack.tf/developer/particles")
-          img.only_desktop(src="/static/geishaboy/img/backpack_tf_logo.svg")
-          | Particle Images by Backpack.TF
-        a(href="https://store.steampowered.com/app/440/Team_Fortress_2/")
-          img.only_desktop(src="/static/geishaboy/img/steam.svg")
-          | Team Fortress 2 by Valve
-      span.only_mobile.regular=`© ${new Date().getFullYear()} LOLOLOL`
+      img.geishaboy(src="/static/geishaboy/img/geishaboy.png")
+      ol.stats
+        li.color-unique 24
+        li.color-genuine 8
+        li.color-unusual= collected.length
+        li.color-collectors 1
+        li.color-selfmade 0
+      span Collectin' since 2015
+      span Particle Images by #[a(href="https://backpack.tf/developer/particles") Backpack.TF]
+      span Team Fortress 2 by #[a(href="https://store.steampowered.com/app/440/Team_Fortress_2") Valve]
