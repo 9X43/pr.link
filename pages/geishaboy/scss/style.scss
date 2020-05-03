@@ -273,12 +273,14 @@ footer {
   font-size: 1.125rem;
 
   .geishaboy {
-    margin: 0 auto;
-    height: 50px;
-    display: block;
+    width: 70px;
+    background: $background-gray url(/static/geishaboy/img/geishaboy.png);
+    background-size: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 100px;
+    height: 70px;
     margin-bottom: 20px;
-    border-radius: 10px;
-    box-sizing: content-box;
   }
 
   .stats {
@@ -295,7 +297,7 @@ footer {
   }
 
   span {
-    line-height: 1.6;
+    margin-bottom: 0.6em;
 
     &:not(:first-of-type) {
       font-weight: normal;
@@ -317,7 +319,7 @@ footer {
       z-index: -1;
       margin: -1px -3px;
       opacity: .2;
-      height: 0.5em;
+      top: 0;
     }
   }
 }
