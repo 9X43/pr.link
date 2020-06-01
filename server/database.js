@@ -15,6 +15,8 @@ function assert_tables_exist(tables, cb) {
     const table = tables[idx];
 
     pool.query(`SELECT * FROM ${table};`, [], (err) => {
+      missing.push(JSON.stringify(err));
+
       if (err)
         missing.push(table);
 
