@@ -14,7 +14,7 @@ html
       div.background
       h1 I'm a Geisha Boy collector, 
         span.regular buying missing Geishas above market value. 
-        span.regular Check my #[a(href="https://backpack.tf/classifieds?steamid=76561198060233163") Buy Orders] or add me on #[a(href="https://steamcommunity.com/id/ptrckr/") steam].
+        span.regular Check my #[a(href="https://backpack.tf/classifieds?steamid=76561198060233163") Buy Orders] or add me on #[a(href="https://steamcommunity.com/id/9X43") steam].
       h2 The collection consists currently of #[span(class="color-unique") 24 Unique], #[span(class="color-genuine") 8 Genuine], #[span(class="color-unusual")= `${collected.length}/${effects.length} Unusual`], #[span(class="color-collectors") 1 Collector's] and #[span(class="color-selfmade") 0 Self-Made] Geishas.
 
     main  
@@ -22,7 +22,7 @@ html
         -
           let href = effect.collected
             ? `https://backpack.tf/item/${effect.item_id}`
-            : "https://steamcommunity.com/id/ptrckr"
+            : "https://steamcommunity.com/id/9X43"
         a.geisha(href=href class=effect.collected ? "collected" : "missing")
           div.effect-img(class=`id${effect.id}`)
           div.effect-meta

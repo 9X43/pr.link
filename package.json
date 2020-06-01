@@ -5,10 +5,8 @@
   "scripts": {
     "heroku-prebuild": "bash heroku-prebuild.sh",
     "heroku-postbuild": "bash heroku-postbuild.sh",
-
     "build:local": "NODE_ENV=development npm run heroku-prebuild && gulp build && npm run heroku-postbuild",
     "build:production": "gulp build",
-
     "start:local": "NODE_ENV=development COOKIE_SECRET=9Jjmc7Jtws node index.js",
     "start:production": "node index.js",
     "start": "npm run build:production && npm run start:production"
@@ -18,15 +16,15 @@
     "bcrypt": "^4.0.1",
     "cookie-session": "^1.4.0",
     "express": "4.17.1",
-    "express-session": "1.17.0",
+    "express-session": "1.17.1",
     "express-sslify": "1.2.0",
-    "fonts.pr.link": "github:ptrckr/fonts.pr.link#master",
+    "fonts.pr.link": "github:9X43/fonts.pr.link#master",
     "gulp": "^4.0.2",
     "gulp-pug": "^4.0.1",
-    "gulp-sass": "^4.0.2",
-    "helmet": "^3.21.3",
-    "node-sass": "^4.13.1",
-    "pg": "^7.18.2",
+    "gulp-sass": "^4.1.0",
+    "helmet": "^3.22.0",
+    "node-sass": "^4.14.0",
+    "pg": "^8.0.3",
     "pug": "2.0.4",
     "vhost": "^3.0.2"
   },

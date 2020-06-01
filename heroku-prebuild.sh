@@ -1,6 +1,6 @@
 #!/bin/bash
 
-__github_username='ptrckr'
+__github_username='9X43'
 __src_folder='pages'
 __private_repositories="${__src_folder}/.private"
 
