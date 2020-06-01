@@ -4,7 +4,7 @@ const { Pool } = require("pg");
 const pool = new Pool({
   connectionTimeoutMillis: 2000,
   max: 20,
-  ssl: is_live ? true : false,
+  ssl: is_live ? { rejectUnauthorized: false } : false,
   connectionString: is_live
     ? process.env.DATABASE_URL
     : "postgresql://ptrckr:@localhost:5432/ptrckr"
@@ -15,8 +15,6 @@ function assert_tables_exist(tables, cb) {
     const table = tables[idx];
 
     pool.query(`SELECT * FROM ${table};`, [], (err) => {
-      missing.push(JSON.stringify(err));
-
       if (err)
         missing.push(table);
 
