@@ -18,7 +18,7 @@
     "express": "4.17.1",
     "express-session": "1.17.1",
     "express-sslify": "1.2.0",
-    "fonts.pr.link": "github:9X43/fonts.pr.link#master",
+    "fonts.pr.link": "github:9-43/fonts.pr.link#master",
     "gulp": "^4.0.2",
     "gulp-pug": "^4.0.1",
     "gulp-sass": "^4.1.0",
